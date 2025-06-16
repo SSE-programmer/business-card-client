@@ -26,6 +26,10 @@ export class BlogPageComponent {
     private _postsResource = this.telegramHttpService.getPostsResource();
 
     public postsSignal: Signal<ITelegramMessage[]> = computed(() => {
+        if (this._postsResource.error()) {
+            return [];
+        }
+
         return this._postsResource.value().map(post => this._preparePost(post));
     });
     public postsLoadingSignal: Signal<boolean> = this._postsResource.isLoading;

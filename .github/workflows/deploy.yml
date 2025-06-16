@@ -26,8 +26,8 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_IP }} "
             cd /home/deployer/apps && 
-            git clone https://github.com/SSE-programmer/business-card-site.git || (cd business-card-site && git pull) && 
-            cd business-card-site && 
+            git clone https://github.com/SSE-programmer/business-card-client.git || (cd business-card-client && git pull) && 
+            cd business-card-client && 
             docker-compose down && 
             docker-compose up -d --build
           "

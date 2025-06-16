@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: business-card
+    container_name: business-card-client
     restart: unless-stopped
     ports:
       - "8096:80"
