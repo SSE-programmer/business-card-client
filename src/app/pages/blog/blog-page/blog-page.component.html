@@ -1,23 +1,25 @@
-<div class="bc-flex bc-flex-col bc-gap-8 bc-w-full">
-    <h1 class="bc-h">Blog</h1>
-    <p>How about keeping up with the latest developments with me?</p>
-</div>
+<div class="blog-page bc-flex bc-flex-col bc-gap-24 bc-flex-1 bc-items-center bc-justify-self-center bc-w-full">
+    <div class="bc-flex bc-flex-col bc-gap-8 bc-w-full">
+        <h1 class="bc-h">Blog</h1>
+        <p>How about keeping up with the latest developments with me?</p>
+    </div>
 
-@let posts = postsSignal();
-@let postsIsLoading = postsLoadingSignal();
+    @let posts = postsSignal();
+    @let postsIsLoading = postsLoadingSignal();
 
-@if (posts?.length) {
-    <div class="posts-container bc-flex bc-flex-col bc-gap-48 bc-self-center">
-        @for (post of posts; track postsTrackBy(post)) {
-            <bc-post [post]="post"></bc-post>
+    @if (posts?.length) {
+        <div class="posts-container bc-flex bc-flex-col bc-gap-48 bc-self-center">
+            @for (post of posts; track postsTrackBy(post)) {
+                <bc-post [post]="post"></bc-post>
 
-            @if (!$last) {
-                <div class="bc-w-full bc-h-min bc-default-border"></div>
+                @if (!$last) {
+                    <div class="bc-w-full bc-h-min bc-default-border"></div>
+                }
             }
-        }
-    </div>
-} @else {
-    <div class="bc-flex bc-flex-col bc-justify-center bc-items-center bc-flex-1">
-        <span class="bc-font-patua-one bc-text-center">It's empty here for now</span>
-    </div>
-}
+        </div>
+    } @else {
+        <div class="bc-flex bc-flex-col bc-justify-center bc-items-center bc-flex-1">
+            <span class="bc-font-patua-one bc-text-center">It's empty here for now</span>
+        </div>
+    }
+</div>
