@@ -10,6 +10,7 @@ export enum EThemeType {
 
 export const DEFAULT_THEME = EThemeType.Blue;
 export const STORAGE_THEME_FIELD_NAME = 'theme:color';
+export const THEME_CHANGE_TRANSITION_CLASS = 'global-color-transition';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
@@ -57,6 +58,11 @@ export class ThemeService {
             .forEach(className => classList.remove(className));
 
         classList.add(`${this._themePrefix}${theme}`);
+        classList.add(THEME_CHANGE_TRANSITION_CLASS);
         localStorage.setItem(STORAGE_THEME_FIELD_NAME, theme.toString());
+
+        setTimeout(() => {
+            classList.remove(THEME_CHANGE_TRANSITION_CLASS);
+        }, 500);
     }
 }

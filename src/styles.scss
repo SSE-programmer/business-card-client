@@ -18,7 +18,7 @@
     }
 }
 
-or, ul {
+ol, ul {
     list-style-type: none;
     padding-inline-start: 0;
 }
@@ -47,21 +47,25 @@ router-outlet {
 @keyframes page-old-out {
     to {
         opacity: 0;
-        transform: rotateY(-90deg) translateZ(100vh);
+        transform: translateX(-50%);
     }
 }
 
 @keyframes page-new-in {
     from {
         opacity: 0;
-        transform: rotateY(90deg) translateZ(100vh);
+        transform: translateX(50%);
     }
 }
 
 ::view-transition-old(page) {
-    animation: 1000ms both page-old-out;
+    animation: 1000ms ease-out both page-old-out;
 }
 
 ::view-transition-new(page) {
-    animation: 1000ms both page-new-in;
+    animation: 1000ms ease-out both page-new-in;
+}
+
+.global-color-transition * {
+    transition: background-color .5s, color .5s;
 }
