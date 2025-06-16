@@ -7,10 +7,5 @@ export const routes: Routes = [
         path: '',
         component: MainLayoutComponent,
         children: _pagesRoutes
-    },
-    {
-        path: '**', loadComponent: () =>
-            import('./pages/not-found-page/not-found-page.component')
-                .then(m => m.NotFoundPageComponent)
     }
 ];
