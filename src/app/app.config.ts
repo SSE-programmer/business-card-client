@@ -3,7 +3,7 @@ import {
     ApplicationConfig, inject,
     LOCALE_ID, provideAppInitializer,
     provideEnvironmentInitializer,
-    provideExperimentalZonelessChangeDetection,
+    provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withHashLocation } from '@angular/router';
 import { routes } from './app.routes';
@@ -20,7 +20,7 @@ registerLocaleData(localeRu);
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideExperimentalZonelessChangeDetection(),
+        provideZonelessChangeDetection(),
         provideEnvironmentInitializer(() => console.log('Zoneless mode active')),
         provideAnimations(),
         provideRouter(

@@ -1,6 +1,6 @@
-import { InjectFlags, InjectionToken, Injector, Type } from '@angular/core';
+import { InjectionToken, Injector, Type } from '@angular/core';
 
-export class TooltipInjector implements Injector {
+export class DynamicModalInjector implements Injector {
     constructor(
         private _parentInjector: Injector,
         private _additionalTokens: WeakMap<any, any>,
@@ -10,12 +10,16 @@ export class TooltipInjector implements Injector {
     public get<T>(
         token: Type<T> | InjectionToken<T>,
         notFoundValue?: T,
-        flags?: InjectFlags,
+        options?: {
+            optional: boolean;
+            host: boolean;
+            skipSelf: boolean;
+        }
     ): T;
 
     public get(token: any, notFoundValue?: any): any;
 
-    public get(token: any, notFoundValue?: any) {
+    public get(token: any, notFoundValue?: any, flags?: any) {
         const value = this._additionalTokens.get(token);
 
         if (value) {
