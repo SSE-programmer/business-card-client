@@ -40,3 +40,28 @@ router-outlet {
     cursor: pointer;
 }
 
+.bc-page {
+    view-transition-name: page
+}
+
+@keyframes page-old-out {
+    to {
+        opacity: 0;
+        transform: rotateY(-90deg) translateZ(100vh);
+    }
+}
+
+@keyframes page-new-in {
+    from {
+        opacity: 0;
+        transform: rotateY(90deg) translateZ(100vh);
+    }
+}
+
+::view-transition-old(page) {
+    animation: 1000ms both page-old-out;
+}
+
+::view-transition-new(page) {
+    animation: 1000ms both page-new-in;
+}

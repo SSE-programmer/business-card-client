@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 
 @Component({
     selector: 'bc-not-found-page-component',
@@ -8,4 +8,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotFoundPageComponent {
+    @HostBinding('class.bc-page') bcPage = true;
 }

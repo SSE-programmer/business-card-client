@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, HostBinding, inject, Signal } from '@angular/core';
 import { TelegramHttpService } from '../../../shared/services/http-services/telegram-http/telegram-http.service';
 import {
     isTelegramMessage,
@@ -20,6 +20,8 @@ import { PostComponent } from './components/post/post.component';
 })
 export class BlogPageComponent {
     private readonly telegramHttpService = inject(TelegramHttpService);
+
+    @HostBinding('class.bc-page') bcPage = true;
 
     private _postsResource = this.telegramHttpService.getPostsResource();
 

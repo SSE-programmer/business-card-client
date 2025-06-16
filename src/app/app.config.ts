@@ -5,7 +5,13 @@ import {
     provideEnvironmentInitializer,
     provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withEnabledBlockingInitialNavigation, withHashLocation } from '@angular/router';
+import {
+    provideRouter, Router,
+    withComponentInputBinding,
+    withEnabledBlockingInitialNavigation,
+    withHashLocation,
+    withViewTransitions
+} from '@angular/router';
 import { routes } from './app.routes';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
@@ -28,6 +34,22 @@ export const appConfig: ApplicationConfig = {
             withEnabledBlockingInitialNavigation(),
             withHashLocation(),
             withComponentInputBinding(),
+            withViewTransitions({
+                onViewTransitionCreated: ({transition}) => {
+                    const router = inject(Router);
+                    const targetUrl = router.getCurrentNavigation()?.finalUrl || '';
+                    const config = {
+                        paths: 'exact',
+                        matrixParams: 'exact',
+                        fragment: 'ignored',
+                        queryParams: 'ignored',
+                    } as const;
+
+                    if (router.isActive(targetUrl, config)) {
+                        transition.skipTransition();
+                    }
+                },
+            })
         ),
         provideHttpClient(withInterceptorsFromDi()),
         {
