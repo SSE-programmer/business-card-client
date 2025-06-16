@@ -1,13 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, Signal } from '@angular/core';
 import { TelegramHttpService } from '../../../shared/services/http-services/telegram-http/telegram-http.service';
-import { catchError, map, Observable, of } from 'rxjs';
 import {
     isTelegramMessage,
     isTelegramMessageGroup,
     ITelegramMessage,
     ITelegramMessageGroup,
 } from '../../../shared/services/http-services/telegram-http/models/ITelegramMessage';
-import { AsyncPipe } from '@angular/common';
 import { PostComponent } from './components/post/post.component';
 
 @Component({
@@ -16,22 +14,20 @@ import { PostComponent } from './components/post/post.component';
     styleUrls: ['./blog-page.component.scss'],
     standalone: true,
     imports: [
-        AsyncPipe,
         PostComponent,
     ],
 })
 export class BlogPageComponent implements OnInit {
     private readonly telegramHttpService = inject(TelegramHttpService);
 
-    public posts$: Observable<ITelegramMessage[]> | null = null;
+    private _postsResource = this.telegramHttpService.getPostsResource();
+
+    public postsSignal: Signal<ITelegramMessage[]> = computed(() => {
+        return this._postsResource.value().map(post => this._preparePost(post));
+    });
+    public postsLoadingSignal: Signal<boolean> = this._postsResource.isLoading;
 
     public ngOnInit(): void {
-        this.posts$ = this.telegramHttpService.getPosts()
-            .pipe(
-                map(response => response.data || []),
-                map(posts => posts.map(post => this._preparePost(post))),
-                catchError(() => of([])),
-            );
     }
 
     public postsTrackBy(post: ITelegramMessage | ITelegramMessageGroup): ITelegramMessage | ITelegramMessageGroup | number | string {

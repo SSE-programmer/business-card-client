@@ -60,10 +60,12 @@
                     "builder": "@angular/build:dev-server",
                     "configurations": {
                         "production": {
-                            "buildTarget": "business-card-client:build:production"
+                            "buildTarget": "business-card-client:build:production",
+                            "proxyConfig": "src/proxy.conf.js"
                         },
                         "development": {
-                            "buildTarget": "business-card-client:build:development"
+                            "buildTarget": "business-card-client:build:development",
+                            "proxyConfig": "src/proxy.conf.js"
                         }
                     },
                     "defaultConfiguration": "development"

@@ -3,7 +3,8 @@
     <p>How about keeping up with the latest developments with me?</p>
 </div>
 
-@let posts = posts$ | async;
+@let posts = postsSignal();
+@let postsIsLoading = postsLoadingSignal();
 
 @if (posts?.length) {
     <div class="posts-container bc-flex bc-flex-col bc-gap-48 bc-self-center">
