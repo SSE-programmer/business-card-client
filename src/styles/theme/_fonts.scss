@@ -53,3 +53,13 @@ h4.bc-h {
 h5.bc-h {
     font-size: 18px;
 }
+
+.bc-link {
+    color: var(--bc-text-default-color);
+    transition: color var(--bc-transition-duration-default);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--bc-text-light-color)
+    }
+}

@@ -49,6 +49,8 @@ export class BlogPageComponent {
     }
 
     private _preparePost(data: ITelegramMessage | ITelegramMessageGroup): ITelegramMessage {
+        let result: ITelegramMessage;
+
         if (isTelegramMessageGroup(data)) {
             let mainMessage: ITelegramMessage | undefined = data.messages.find(message => message.mainMessage);
 
@@ -70,9 +72,13 @@ export class BlogPageComponent {
                 }
             });
 
-            return mainMessage;
+            result = mainMessage;
+        } else {
+            result = data;
         }
 
-        return data;
+        result.reactions = (result.reactions || []).filter(reaction => reaction.reaction.className === 'ReactionEmoji');
+
+        return result;
     }
 }

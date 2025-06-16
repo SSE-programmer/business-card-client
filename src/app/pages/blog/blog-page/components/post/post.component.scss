@@ -1,4 +1,14 @@
 :host {
     display: flex;
     width: 100%;
+
+    .read-more-button {
+        --left-padding: var(--bc-padding-24);
+
+        position: relative;
+        left: calc(var(--left-padding) * -1);
+        background: linear-gradient(to right, transparent 0%, var(--bc-bg-light-color) var(--left-padding), var(--bc-bg-light-color) 100%);
+        border: none;
+        padding: 0 0 0 var(--left-padding);
+    }
 }
