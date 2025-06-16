@@ -1,0 +1,47 @@
+:host {
+    display: inline-block;
+    width: 50px;
+    aspect-ratio: 1/1;
+}
+
+.loading-spinner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 3px dotted var(--bc-border-default-color);
+    border-style: solid solid dotted dotted;
+    border-radius: 50%;
+    animation: rotation 2s linear infinite;
+
+    &::after {
+        content: '';
+        width: 50%;
+        aspect-ratio: 1 / 1;
+        border: 3px dotted var(--bc-border-hover-color);
+        border-style: solid solid dotted;
+        border-radius: 50%;
+        animation: rotationBack 1.1s linear infinite;
+    }
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotationBack {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+

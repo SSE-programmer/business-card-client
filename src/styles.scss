@@ -59,11 +59,11 @@ router-outlet {
 }
 
 ::view-transition-old(page) {
-    animation: 1000ms ease-out both page-old-out;
+    animation: 500ms ease-out both page-old-out;
 }
 
 ::view-transition-new(page) {
-    animation: 1000ms ease-out both page-new-in;
+    animation: 500ms ease-out both page-new-in;
 }
 
 .global-color-transition * {

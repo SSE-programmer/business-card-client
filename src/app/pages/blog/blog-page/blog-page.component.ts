@@ -7,6 +7,7 @@ import {
     ITelegramMessageGroup,
 } from '../../../shared/services/http-services/telegram-http/models/ITelegramMessage';
 import { PostComponent } from './components/post/post.component';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'bc-blog-page',
@@ -15,6 +16,7 @@ import { PostComponent } from './components/post/post.component';
     standalone: true,
     imports: [
         PostComponent,
+        LoadingSpinnerComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
