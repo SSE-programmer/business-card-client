@@ -12,7 +12,6 @@ export const SKILLS_LIST: ISkill[] = [
     { name: 'Chart.JS', level: 2 },
     { name: 'Floating UI', level: 2 },
     { name: 'Popper', level: 2 },
-    { name: 'Chart.JS', level: 2 },
     { name: 'HTML5', level: 2 },
     { name: 'SCSS/CSS', level: 2 },
     { name: 'Git', level: 2 },
