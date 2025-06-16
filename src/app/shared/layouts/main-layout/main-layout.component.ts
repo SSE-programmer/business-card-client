@@ -20,7 +20,7 @@ import { AosService } from '../../services/aos.service';
 export class MainLayoutComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
     private readonly aosService = inject(AosService);
-;
+
     private readonly pageContainer = viewChild.required<ElementRef<HTMLElement>>('pageContainer');
 
     public ngOnInit(): void {

@@ -1,16 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-article-detail',
-  templateUrl: './article-detail-page.component.html',
-  styleUrls: ['./article-detail-page.component.scss'],
-  standalone: true
+    selector: 'bc-article-detail',
+    templateUrl: './article-detail-page.component.html',
+    styleUrls: ['./article-detail-page.component.scss'],
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArticleDetailPageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class ArticleDetailPageComponent {
 }

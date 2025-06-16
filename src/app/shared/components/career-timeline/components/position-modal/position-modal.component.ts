@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { IPosition } from '../../models/IJobExperience';
-import { TooltipConfig } from '../../../tooltip/tooltip.config';
 import { DatePipe } from '@angular/common';
 import { TagComponent } from '../../../tag/tag.component';
 import { DynamicModalConfig } from '../../../dynamic-modal/dynamic-modal.config';

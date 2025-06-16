@@ -19,7 +19,7 @@ export class DynamicModalInjector implements Injector {
 
     public get(token: any, notFoundValue?: any): any;
 
-    public get(token: any, notFoundValue?: any, flags?: any) {
+    public get(token: any, notFoundValue?: any, _flags?: any) {
         const value = this._additionalTokens.get(token);
 
         if (value) {

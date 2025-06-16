@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-body',
-  templateUrl: './not-found-page.component.html',
-  styleUrls: ['./not-found-page.component.scss'],
-  standalone: true
+    selector: 'bc-not-found-page-component',
+    templateUrl: './not-found-page.component.html',
+    styleUrls: ['./not-found-page.component.scss'],
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotFoundPageComponent {}
+export class NotFoundPageComponent {
+}

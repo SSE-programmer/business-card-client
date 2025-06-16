@@ -12,7 +12,6 @@ export class OnloadFadeInDirective implements OnInit {
 
     public ngOnInit(): void {
         const element = this.elementRef.nativeElement;
-        const parent = element.parentElement;
 
         if (!(element instanceof HTMLImageElement)) {
             throw new Error('This is not an Image Element');

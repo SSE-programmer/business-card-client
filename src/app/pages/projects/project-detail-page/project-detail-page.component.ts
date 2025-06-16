@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-project-detail',
-  templateUrl: './project-detail-page.component.html',
-  styleUrls: ['./project-detail-page.component.scss'],
-  standalone: true
+    selector: 'bc-project-detail',
+    templateUrl: './project-detail-page.component.html',
+    styleUrls: ['./project-detail-page.component.scss'],
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectDetailPageComponent {}
+export class ProjectDetailPageComponent {
+}

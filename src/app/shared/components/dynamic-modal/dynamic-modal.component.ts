@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterViewInit, ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentRef,
@@ -26,6 +26,7 @@ import { DynamicModalConfig } from './dynamic-modal.config';
     ],
     templateUrl: './dynamic-modal.component.html',
     styleUrl: './dynamic-modal.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DynamicModalComponent implements OnInit, AfterViewInit, OnDestroy {
     public readonly config = inject(DynamicModalConfig);

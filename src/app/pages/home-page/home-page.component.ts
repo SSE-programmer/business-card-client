@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgComponentOutlet, NgOptimizedImage } from '@angular/common';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { CareerTimelineComponent } from '../../shared/components/career-timeline/career-timeline.component';
@@ -22,6 +22,7 @@ import { TagComponent } from '../../shared/components/tag/tag.component';
         LevelIndicatorComponent,
         TagComponent,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePageComponent {
     public contactsList = CONTACTS_LIST;

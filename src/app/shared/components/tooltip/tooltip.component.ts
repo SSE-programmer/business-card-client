@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterViewInit, ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentRef,
@@ -27,6 +27,7 @@ import { ClickOutsideDirective } from '../../directives/click-outside/click-outs
     ],
     templateUrl: './tooltip.component.html',
     styleUrl: './tooltip.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TooltipComponent implements OnInit, AfterViewInit, OnDestroy {
     public readonly tooltipConfig = inject(TooltipConfig);

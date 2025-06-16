@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { INavigationRoute } from '../../../../models/INavigationRoute';
 import { LogoComponent } from '../../../../components/logo/logo.component';
@@ -16,6 +16,7 @@ import { SettingsMenuComponent } from './components/settings-menu/settings-menu.
         IconSettingsComponent,
         SettingsMenuComponent,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
     public navigationRoutes: INavigationRoute[] = [

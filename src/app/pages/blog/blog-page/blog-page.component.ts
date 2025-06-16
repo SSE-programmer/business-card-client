@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
 import { TelegramHttpService } from '../../../shared/services/http-services/telegram-http/telegram-http.service';
 import {
     isTelegramMessage,
@@ -16,8 +16,9 @@ import { PostComponent } from './components/post/post.component';
     imports: [
         PostComponent,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlogPageComponent implements OnInit {
+export class BlogPageComponent {
     private readonly telegramHttpService = inject(TelegramHttpService);
 
     private _postsResource = this.telegramHttpService.getPostsResource();
@@ -26,9 +27,6 @@ export class BlogPageComponent implements OnInit {
         return this._postsResource.value().map(post => this._preparePost(post));
     });
     public postsLoadingSignal: Signal<boolean> = this._postsResource.isLoading;
-
-    public ngOnInit(): void {
-    }
 
     public postsTrackBy(post: ITelegramMessage | ITelegramMessageGroup): ITelegramMessage | ITelegramMessageGroup | number | string {
         if (isTelegramMessage(post)) {
