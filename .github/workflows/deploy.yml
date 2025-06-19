@@ -30,7 +30,7 @@ jobs:
               rm -rf business-card-client
               git clone https://${{ secrets.PERSONAL_TOKEN_GITHUB }}@github.com/SSE-programmer/business-card-client.git
             else
-              cd business-card-client && git pull
+              cd /home/deployer/apps/business-card-client && git pull
             fi &&
             cd business-card-client &&
             docker-compose down &&
