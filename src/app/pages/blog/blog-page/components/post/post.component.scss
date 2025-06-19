@@ -2,6 +2,13 @@
     display: flex;
     width: 100%;
 
+    .statistic-icon {
+        width: 30px;
+        min-width: 30px;
+        height: 30px;
+        max-height: 30px;
+    }
+
     .read-more-button {
         --left-padding: var(--bc-padding-24);
 

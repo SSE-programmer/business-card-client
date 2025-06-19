@@ -14,7 +14,7 @@
 
         @if (post.text) {
             <span class="bc-text-justify">{{ post.text?.slice(0, MAX_TEXT_VISIBLE_LENGTH) }}
-                @if ((post.text?.length || 0) >= MAX_TEXT_VISIBLE_LENGTH) {
+                @if ((post.text?.length || 0) > MAX_TEXT_VISIBLE_LENGTH) {
                     <button
                         class="read-more-button bc-link bc-font-patua-one bc-text-20"
                         type="button"
@@ -27,17 +27,30 @@
             </span>
         }
 
-        @if (post.reactions?.length) {
-            <div class="bc-flex bc-gap-4 bc-items-center bc-justify-center">
-                @for (reaction of post.reactions; track reaction.reaction) {
-                    @if ('emoticon' in reaction.reaction) {
-                        <bc-tag class="bc-flex bc-flex-col bc-items-center bc-font-patua-one bc-cursor-pointer">
-                            <span>{{ reaction.reaction.emoticon }}</span>
-                            <span class="bc-text-16">{{ reaction.count }}</span>
-                        </bc-tag>
-                    }
-                }
+
+        <div class="bc-flex bc-gap-12 bc-items-center bc-justify-between">
+            <div class="bc-flex bc-flex-col bc-items-center bc-self-stretch bc-font-patua-one bc-cursor-default bc-select-none">
+                <bc-icon-comments class="statistic-icon bc-flex-1"></bc-icon-comments>
+                <span class="bc-text-16">{{ post.replies?.count || 0 }}</span>
             </div>
-        }
+
+            @if (post.reactions?.length) {
+                <div class="bc-flex bc-gap-4 bc-items-center bc-justify-center bc-self-stretch">
+                    @for (reaction of post.reactions!.slice(0, MAX_REACTIONS_VISIBLE_LENGTH); track reaction.reaction) {
+                        @if ('emoticon' in reaction.reaction) {
+                            <bc-tag class="bc-flex bc-flex-col bc-items-center bc-self-stretch bc-font-patua-one bc-cursor-default bc-select-none">
+                                <span class="bc-flex-1">{{ reaction.reaction.emoticon }}</span>
+                                <span class="bc-text-16">{{ reaction.count }}</span>
+                            </bc-tag>
+                        }
+                    }
+                </div>
+            }
+
+            <div class="bc-flex bc-flex-col bc-items-center bc-self-stretch bc-font-patua-one bc-cursor-default bc-select-none">
+                <bc-icon-views class="statistic-icon bc-flex-1"></bc-icon-views>
+                <span class="bc-text-16">{{ post.views || 0 }}</span>
+            </div>
+        </div>
     </div>
 </div>

@@ -8,6 +8,8 @@ import {
 } from '../../../../../shared/components/career-timeline/components/position-modal/position-modal.component';
 import { PostModalComponent } from './components/post-modal/post-modal.component';
 import { TagComponent } from '../../../../../shared/components/tag/tag.component';
+import { IconCommentsComponent } from '../../../../../shared/components/icons/icon-comments/icon-comments.component';
+import { IconViewsComponent } from '../../../../../shared/components/icons/icon-views/icon-views.component';
 
 @Component({
     selector: 'bc-post',
@@ -19,6 +21,8 @@ import { TagComponent } from '../../../../../shared/components/tag/tag.component
         MediaGridComponent,
         UpperCasePipe,
         TagComponent,
+        IconCommentsComponent,
+        IconViewsComponent,
     ],
 })
 export class PostComponent {
@@ -26,6 +30,7 @@ export class PostComponent {
 
     public readonly postSignal: InputSignal<ITelegramMessage> = input.required({ alias: 'post' });
     public readonly MAX_TEXT_VISIBLE_LENGTH = 500;
+    public readonly MAX_REACTIONS_VISIBLE_LENGTH = 7;
 
     public openPostModal() {
         this.dynamicModalService.open(PostModalComponent, {
