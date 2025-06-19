@@ -13,7 +13,7 @@
         }
 
         @if (post.text) {
-            <span class="bc-text-justify">{{ post.text?.slice(0, MAX_TEXT_VISIBLE_LENGTH) }}
+            <span class="bc-text-justify bc-whitespace-pre-line">{{ post.text?.slice(0, MAX_TEXT_VISIBLE_LENGTH) }}
                 @if ((post.text?.length || 0) > MAX_TEXT_VISIBLE_LENGTH) {
                     <button
                         class="read-more-button bc-link bc-font-patua-one bc-text-20"

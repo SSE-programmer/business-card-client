@@ -3,9 +3,6 @@ import { ITelegramMessage } from '../../../../../shared/services/http-services/t
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { MediaGridComponent } from '../media-grid/media-grid.component';
 import { DynamicModalService } from '../../../../../shared/components/dynamic-modal/dynamic-modal.service';
-import {
-    PositionModalComponent,
-} from '../../../../../shared/components/career-timeline/components/position-modal/position-modal.component';
 import { PostModalComponent } from './components/post-modal/post-modal.component';
 import { TagComponent } from '../../../../../shared/components/tag/tag.component';
 import { IconCommentsComponent } from '../../../../../shared/components/icons/icon-comments/icon-comments.component';
