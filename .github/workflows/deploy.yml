@@ -25,9 +25,13 @@ jobs:
       - name: Deploy via SSH
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_IP }} "
-            cd /home/deployer/apps && 
-            (git clone https://${{ secrets.PERSONAL_TOKEN_GITHUB }}@github.com/SSE-programmer/business-card-client.git || (cd business-card-client && git pull)) && 
-            cd business-card-client && 
-            docker-compose down && 
+            cd /home/deployer/apps &&
+            if [ ! -d business-card-client ]; then
+              git clone https://${{ secrets.PERSONAL_TOKEN_GITHUB }}@github.com/SSE-programmer/business-card-client.git
+            else
+              cd business-card-client && git pull
+            fi &&
+            cd business-card-client &&
+            docker-compose down &&
             docker-compose up -d --build
           "
