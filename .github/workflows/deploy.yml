@@ -32,7 +32,7 @@ jobs:
             else
               cd business-card-client && git pull
             fi &&
-            cd business-card-client &&
+            cd /home/deployer/apps/business-card-client &&
             docker-compose down &&
             docker-compose up -d --build
           "
