@@ -1,0 +1,65 @@
+@font-face {
+    font-family: "Titan One";
+    src: url("/assets/fonts/TitanOne.ttf") format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Patua One";
+    src: url("/assets/fonts/PatuaOne.ttf") format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Alegreya";
+    src: url("/assets/fonts/Alegreya.ttf") format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Alegreya";
+    src: url("/assets/fonts/Alegreya-Italic.ttf") format('truetype');
+    font-style: italic;
+    font-weight: normal;
+}
+
+.bc-h {
+    font-family: "Patua One";
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%;
+    color: var(--bc-text-default-color);
+}
+
+h1.bc-h {
+    font-size: 40px;
+}
+
+h2.bc-h {
+    font-size: 34px;
+}
+
+h3.bc-h {
+    font-size: 28px;
+}
+
+h4.bc-h {
+    font-size: 22px;
+}
+
+h5.bc-h {
+    font-size: 18px;
+}
+
+.bc-link {
+    color: var(--bc-text-default-color);
+    transition: color var(--bc-transition-duration-default);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--bc-text-light-color)
+    }
+}

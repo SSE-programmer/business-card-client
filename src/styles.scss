@@ -1,0 +1,71 @@
+@use 'styles/theme/index' as *;
+
+:root {
+    --bc-font-size-default: 22px;
+
+    --bc-transform-scale-default: 1.1;
+    --bc-transition-duration-default: .2s;
+}
+
+* {
+    box-sizing: border-box;
+    text-decoration: none;
+    margin: 0;
+
+    &::-webkit-scrollbar {
+        display: none;
+        width: 0;
+    }
+}
+
+ol, ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+}
+
+body {
+    margin: 0;
+    background-repeat: no-repeat;
+
+    font-family: "Alegreya", serif;
+    color: var(--bc-text-default-color);
+    font-size: var(--bc-font-size-default);
+}
+
+router-outlet {
+    display: none;
+}
+
+[role='button'] {
+    cursor: pointer;
+}
+
+.bc-page {
+    view-transition-name: page
+}
+
+@keyframes page-old-out {
+    to {
+        opacity: 0;
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes page-new-in {
+    from {
+        opacity: 0;
+        transform: translateX(50%);
+    }
+}
+
+::view-transition-old(page) {
+    animation: 500ms ease-out both page-old-out;
+}
+
+::view-transition-new(page) {
+    animation: 500ms ease-out both page-new-in;
+}
+
+.global-color-transition * {
+    transition: background-color .5s, color .5s;
+}

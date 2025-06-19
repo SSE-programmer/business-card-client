@@ -1,0 +1,11 @@
+:host {
+    flex: 1;
+
+    .blog-page {
+        max-width: 900px;
+    }
+
+    .posts-container {
+        position: relative;
+    }
+}

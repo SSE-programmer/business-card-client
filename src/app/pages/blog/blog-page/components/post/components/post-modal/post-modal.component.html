@@ -1,0 +1,40 @@
+@let post = postSignal();
+
+<div class="post-modal bc-flex bc-flex-col">
+    <header class="bc-flex bc-gap-4 bc-items-center bc-justify-between">
+        <span class="bc-font-patua-one bc-text-20">{{ post.date | date: 'dd MMM yyyy - HH:mm' | uppercase }}</span>
+        <div
+            class="bc-flex bc-items-center bc-justify-center bc-h-fit bc-text-34"
+            role="button"
+            (click)="closeModal()"
+            (keydown.enter)="closeModal()"
+            tabindex="0"
+        >✖
+        </div>
+    </header>
+
+    <div class="post bc-flex bc-flex-col bc-gap-12 bc-pt-24 bc-ph-4">
+        @let media = post.media;
+
+        @if (media && media.length) {
+            <bc-media-grid [media]="media"></bc-media-grid>
+        }
+
+        @if (post.text) {
+            <span class="bc-text-justify">{{ post.text }}</span>
+        }
+
+        @if (post.reactions?.length) {
+            <div class="bc-flex bc-gap-4 bc-items-center bc-justify-center">
+                @for (reaction of post.reactions; track reaction.reaction) {
+                    @if ('emoticon' in reaction.reaction) {
+                        <bc-tag class="bc-flex bc-flex-col bc-items-center bc-font-patua-one bc-cursor-pointer">
+                            <span>{{ reaction.reaction.emoticon }}</span>
+                            <span class="bc-text-16">{{ reaction.count }}</span>
+                        </bc-tag>
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>
