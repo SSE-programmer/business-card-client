@@ -26,7 +26,8 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_IP }} "
             cd /home/deployer/apps &&
-            if [ ! -d business-card-client ]; then
+            if [ ! -d business-card-client/.git ]; then
+              rm -rf business-card-client
               git clone https://${{ secrets.PERSONAL_TOKEN_GITHUB }}@github.com/SSE-programmer/business-card-client.git
             else
               cd business-card-client && git pull
