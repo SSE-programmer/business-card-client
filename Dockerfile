@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npx nx build business-card-client --prod
+RUN npx ng build --configuration production
 
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
