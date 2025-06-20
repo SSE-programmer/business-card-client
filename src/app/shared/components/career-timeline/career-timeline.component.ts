@@ -73,8 +73,10 @@ export class CareerTimelineComponent implements OnInit, AfterViewInit {
     }
 
     public ngAfterViewInit() {
-        this._calculateYearCellLeftMarginWidth();
-        this._calculateYearCellAnchorWidth();
+        requestAnimationFrame(() => {
+            this._calculateYearCellLeftMarginWidth();
+            this._calculateYearCellAnchorWidth();
+        });
     }
 
     public showPositionTooltip(event: Event, position: IPosition): void {
