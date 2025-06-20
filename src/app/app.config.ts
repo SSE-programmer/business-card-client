@@ -18,9 +18,9 @@ import localeRu from '@angular/common/locales/ru';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { ELocale } from './shared/enums/locale.enum';
-import { APP_DATE_FORMATS, AppDateAdapter } from './shared/adapters/date.adapter';
-import { ThemeService } from './shared/services/theme.service';
+import { ELocale } from '@enums/locale.enum';
+import { APP_DATE_FORMATS, AppDateAdapter } from '@adapters/date.adapter';
+import { ThemeService } from '@services/theme.service';
 
 registerLocaleData(localeRu);
 

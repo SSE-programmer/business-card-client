@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ColorSelectorComponent } from './components/color-selector/color-selector.component';
-import { EThemeType, ThemeService } from '../../../../../../services/theme.service';
+import { EThemeType, ThemeService } from '@services/theme.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({

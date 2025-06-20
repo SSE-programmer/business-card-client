@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, HostBinding, inject, Signal } from '@angular/core';
-import { TelegramHttpService } from '../../../shared/services/http-services/telegram-http/telegram-http.service';
+import { TelegramHttpService } from '@services/http-services/telegram-http/telegram-http.service';
 import {
     isTelegramMessage,
     isTelegramMessageGroup,
     ITelegramMessage,
     ITelegramMessageGroup,
-} from '../../../shared/services/http-services/telegram-http/models/ITelegramMessage';
+} from '@services/http-services/telegram-http/models/ITelegramMessage';
 import { PostComponent } from './components/post/post.component';
-import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from '@components/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'bc-blog-page',

@@ -1,4 +1,4 @@
-import { IJobExperience } from '../../../shared/components/career-timeline/models/IJobExperience';
+import { IJobExperience } from '@components/career-timeline/models/IJobExperience';
 
 export const JOB_EXPERIENCE: IJobExperience[] = [
     {

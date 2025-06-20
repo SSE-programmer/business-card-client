@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { delay, fromEvent, tap, throttleTime } from 'rxjs';
-import { AosService } from '../../services/aos.service';
+import { AosService } from '@services/aos.service';
 
 
 @Component({

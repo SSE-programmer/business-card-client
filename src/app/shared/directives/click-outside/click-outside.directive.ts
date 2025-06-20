@@ -1,7 +1,7 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, inject, OnDestroy, Output } from '@angular/core';
 import { filter, fromEvent, Subscription } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
-import { ComponentsService } from '../../services/components.service';
+import { ComponentsService } from '@services/components.service';
 
 
 @Directive({

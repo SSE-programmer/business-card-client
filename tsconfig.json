@@ -1,34 +1,107 @@
 /* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
 /* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "preserve"
-  },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "typeCheckHostBindings": true,
-    "strictTemplates": true
-  },
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
+    "compileOnSave": false,
+    "compilerOptions": {
+        "strict": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "skipLibCheck": true,
+        "isolatedModules": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "ES2022",
+        "module": "preserve",
+        "paths": {
+            "@src": [
+                "./src"
+            ],
+            "@src/*": [
+                "./src/*"
+            ],
+            "@config": [
+                "./src/config"
+            ],
+            "@config/*": [
+                "./src/config/*"
+            ],
+            "@app": [
+                "./src/app"
+            ],
+            "@app/*": [
+                "./src/app/*"
+            ],
+            "@pages": [
+                "./src/app/pages"
+            ],
+            "@pages/*": [
+                "./src/app/pages/*"
+            ],
+            "@shared": [
+                "./src/app/shared"
+            ],
+            "@shared/*": [
+                "./src/app/shared/*"
+            ],
+            "@adapters": [
+                "./src/app/shared/adapters"
+            ],
+            "@adapters/*": [
+                "./src/app/shared/adapters/*"
+            ],
+            "@components": [
+                "./src/app/shared/components"
+            ],
+            "@components/*": [
+                "./src/app/shared/components/*"
+            ],
+            "@directives": [
+                "./src/app/shared/directives"
+            ],
+            "@directives/*": [
+                "./src/app/shared/directives/*"
+            ],
+            "@enums": [
+                "./src/app/shared/enums"
+            ],
+            "@enums/*": [
+                "./src/app/shared/enums/*"
+            ],
+            "@layouts": [
+                "./src/app/shared/layouts"
+            ],
+            "@layouts/*": [
+                "./src/app/shared/layouts/*"
+            ],
+            "@models": [
+                "./src/app/shared/models"
+            ],
+            "@models/*": [
+                "./src/app/shared/models/*"
+            ],
+            "@services": [
+                "./src/app/shared/services"
+            ],
+            "@services/*": [
+                "./src/app/shared/services/*"
+            ]
+        },
+        "angularCompilerOptions": {
+            "enableI18nLegacyMessageIdFormat": false,
+            "strictInjectionParameters": true,
+            "strictInputAccessModifiers": true,
+            "typeCheckHostBindings": true,
+            "strictTemplates": true
+        },
+        "files": [],
+        "references": [
+            {
+                "path": "./tsconfig.app.json"
+            },
+            {
+                "path": "./tsconfig.spec.json"
+            }
+        ]
     }
-  ]
-}

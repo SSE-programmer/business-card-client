@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
-import { IMedia } from '../../../../../shared/services/http-services/telegram-http/models/ITelegramMessage';
+import { IMedia } from '@services/http-services/telegram-http/models/ITelegramMessage';
 
 @Component({
     selector: 'bc-media-grid',

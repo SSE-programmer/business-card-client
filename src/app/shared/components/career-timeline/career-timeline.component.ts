@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { IJobExperience, IPosition } from './models/IJobExperience';
 import { PositionItemComponent } from './components/position-item/position-item.component';
-import { ViewportService } from '../../services/viewport.service';
+import { ViewportService } from '@services/viewport.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { tap, throttleTime } from 'rxjs';
 import { TooltipService } from '../tooltip/tooltip.service';
