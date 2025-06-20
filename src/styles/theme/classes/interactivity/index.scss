@@ -1,2 +1,2 @@
-@import './cursor';
-@import './user-select';
+@use './cursor' as *;
+@use './user-select' as *;

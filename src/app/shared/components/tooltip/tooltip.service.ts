@@ -56,7 +56,7 @@ export class TooltipService {
         document.body.appendChild(tooltipDOMElement);
         componentRef.instance.childComponentType = componentType;
 
-        function generateGetBoundingClientRect(x1 = 0, y1 = 0, x2?: number, y2?: number): () => ClientRect | DOMRect {
+        function generateGetBoundingClientRect(x1 = 0, y1 = 0, x2?: number, y2?: number): () => DOMRect {
             return (() => ({
                 width: 0,
                 height: 0,
@@ -64,7 +64,7 @@ export class TooltipService {
                 right: x1,
                 bottom: y2 ?? y1,
                 left: x2 ?? x1,
-            })) as () => ClientRect | DOMRect;
+            })) as () => DOMRect;
         }
 
         const virtualElement: VirtualElement = {
