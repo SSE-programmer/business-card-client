@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, ViewContainerRef } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TooltipService } from './shared/components/tooltip/tooltip.service';
-import { DynamicModalService } from './shared/components/dynamic-modal/dynamic-modal.service';
+import { TooltipService } from '@components/tooltip/tooltip.service';
+import { DynamicModalService } from '@components/dynamic-modal/dynamic-modal.service';
 
 @Component({
     selector: 'bc-root',

@@ -1,8 +1,8 @@
 import { IIconsLinks } from '../models/IIconsLinks';
-import { IconMailComponent } from '../../../shared/components/icons/icon-mail/icon-mail.component';
-import { IconTelegramComponent } from '../../../shared/components/icons/icon-telegram/icon-telegram.component';
-import { IconGithubComponent } from '../../../shared/components/icons/icon-github/icon-github.component';
-import { IconInstagramComponent } from '../../../shared/components/icons/icon-instagram/icon-instagram.component';
+import { IconMailComponent } from '@components/icons/icon-mail/icon-mail.component';
+import { IconTelegramComponent } from '@components/icons/icon-telegram/icon-telegram.component';
+import { IconGithubComponent } from '@components/icons/icon-github/icon-github.component';
+import { IconInstagramComponent } from '@components/icons/icon-instagram/icon-instagram.component';
 
 export const CONTACTS_LIST: IIconsLinks[] = [
     {

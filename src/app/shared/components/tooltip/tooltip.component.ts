@@ -15,8 +15,8 @@ import { TooltipService } from './tooltip.service';
 import { TooltipConfig } from './tooltip.config';
 import { debounceTime, fromEvent } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { InsertionDirective } from '../../directives/insertion/insertion.directive';
-import { ClickOutsideDirective } from '../../directives/click-outside/click-outside.directive';
+import { InsertionDirective } from '@directives/insertion/insertion.directive';
+import { ClickOutsideDirective } from '@directives/click-outside/click-outside.directive';
 
 @Component({
     selector: 'bc-tooltip',

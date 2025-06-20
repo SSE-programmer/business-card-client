@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from '@angular/core';
-import { ITelegramMessage } from '../../../../../shared/services/http-services/telegram-http/models/ITelegramMessage';
+import { ITelegramMessage } from '@services/http-services/telegram-http/models/ITelegramMessage';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { MediaGridComponent } from '../media-grid/media-grid.component';
-import { DynamicModalService } from '../../../../../shared/components/dynamic-modal/dynamic-modal.service';
+import { DynamicModalService } from '@components/dynamic-modal/dynamic-modal.service';
 import { PostModalComponent } from './components/post-modal/post-modal.component';
-import { TagComponent } from '../../../../../shared/components/tag/tag.component';
-import { IconCommentsComponent } from '../../../../../shared/components/icons/icon-comments/icon-comments.component';
-import { IconViewsComponent } from '../../../../../shared/components/icons/icon-views/icon-views.component';
+import { TagComponent } from '@components/tag/tag.component';
+import { IconCommentsComponent } from '@components/icons/icon-comments/icon-comments.component';
+import { IconViewsComponent } from '@components/icons/icon-views/icon-views.component';
 
 @Component({
     selector: 'bc-post',

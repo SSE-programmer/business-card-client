@@ -1,4 +1,4 @@
-import { IMediaQuery } from '../../models/IMediaQuery';
+import { IMediaQuery } from '@models/IMediaQuery';
 
 export class TooltipConfig<D = any> {
     boundariesElement?: HTMLElement;

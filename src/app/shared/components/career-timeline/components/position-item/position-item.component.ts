@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { IPosition } from '../../models/IJobExperience';
-import { FocusVisibleDirective } from '../../../../directives/focus-visible/focus-visible.directive';
+import { FocusVisibleDirective } from '@directives/focus-visible/focus-visible.directive';
 
 @Component({
     selector: 'bc-position-item',

@@ -12,7 +12,7 @@ import {
     Type,
     ViewChild,
 } from '@angular/core';
-import { InsertionDirective } from '../../directives/insertion/insertion.directive';
+import { InsertionDirective } from '@directives/insertion/insertion.directive';
 import { debounceTime, fromEvent } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DynamicModalService } from './dynamic-modal.service';
