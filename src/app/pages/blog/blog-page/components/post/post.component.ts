@@ -35,7 +35,13 @@ export class PostComponent {
             data: {
                 post: this.postSignal(),
             },
-            width: '100%',
+            width: '1200px',
+            mediaQueries: [
+                {
+                    query: '(max-width: 720px)',
+                    width: '100%',
+                },
+            ],
         });
     }
 }

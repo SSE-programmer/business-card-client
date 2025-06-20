@@ -78,7 +78,7 @@ export class CareerTimelineComponent implements OnInit, AfterViewInit {
     }
 
     public showPositionTooltip(event: Event, position: IPosition): void {
-        if (event instanceof PointerEvent &&  event.pointerType === 'touch') {
+        if (event instanceof PointerEvent && event.pointerType === 'touch') {
             return;
         }
 
@@ -118,7 +118,13 @@ export class CareerTimelineComponent implements OnInit, AfterViewInit {
                 company,
                 position,
             },
-            width: '100%',
+            width: '1200px',
+            mediaQueries: [
+                {
+                    query: '(max-width: 720px)',
+                    width: '100%',
+                },
+            ],
         });
     }
 

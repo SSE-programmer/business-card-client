@@ -1,5 +1,6 @@
 import {
-    AfterViewInit, ChangeDetectionStrategy,
+    AfterViewInit,
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentRef,
@@ -26,7 +27,7 @@ import { DynamicModalConfig } from './dynamic-modal.config';
     ],
     templateUrl: './dynamic-modal.component.html',
     styleUrl: './dynamic-modal.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicModalComponent implements OnInit, AfterViewInit, OnDestroy {
     public readonly config = inject(DynamicModalConfig);
@@ -74,6 +75,10 @@ export class DynamicModalComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!this.childComponentType) {
             throw new Error('Child component type must be defined');
         }
+
+        requestAnimationFrame(() => {
+            this.dynamicModal.nativeElement.classList.add('transition');
+        });
 
         this._loadChildComponent(this.childComponentType);
         this.cd.detectChanges();

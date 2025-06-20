@@ -12,7 +12,7 @@
     backdrop-filter: blur(6px);
     background-color: var(--bc-bg-modals-wrapper-color);
 
-    animation: fade-in  var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
+    animation: fade-in var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
 
     &.closed {
         animation: fade-out var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
@@ -32,10 +32,12 @@
         box-shadow: var(--bc-modals-box-shadow);
         overflow: auto;
 
-        transition: width var(--bc-transition-duration-default);
-
         @media (max-width: 720px) {
             max-width: calc(100% - 4px);
+        }
+
+        &.transition {
+            transition: width var(--bc-transition-duration-default);
         }
 
         &__body {
