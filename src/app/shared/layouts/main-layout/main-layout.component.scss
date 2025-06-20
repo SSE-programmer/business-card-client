@@ -11,6 +11,7 @@
         max-width: var(--bc-page-container-max-width);
         overflow-x: hidden;
         z-index: 0;
+        view-transition-name: page-container;
 
         @media (max-width: 720px) {
             padding: var(--bc-padding-8);

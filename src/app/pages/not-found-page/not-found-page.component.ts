@@ -7,6 +7,4 @@ import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotFoundPageComponent {
-    @HostBinding('class.bc-page') bcPage = true;
-}
+export class NotFoundPageComponent {}

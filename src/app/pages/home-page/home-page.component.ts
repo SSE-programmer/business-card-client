@@ -25,8 +25,6 @@ import { TagComponent } from '@components/tag/tag.component';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePageComponent {
-    @HostBinding('class.bc-page') bcPage = true;
-
     public contactsList = CONTACTS_LIST;
     public jobExperience = JOB_EXPERIENCE;
     public skillsList = SKILLS_LIST;

@@ -40,10 +40,6 @@ router-outlet {
     cursor: pointer;
 }
 
-.bc-page {
-    view-transition-name: page
-}
-
 @keyframes page-old-out {
     to {
         opacity: 0;
@@ -58,11 +54,11 @@ router-outlet {
     }
 }
 
-::view-transition-old(page) {
+::view-transition-old(page-container) {
     animation: 500ms ease-out both page-old-out;
 }
 
-::view-transition-new(page) {
+::view-transition-new(page-container) {
     animation: 500ms ease-out both page-new-in;
 }
 

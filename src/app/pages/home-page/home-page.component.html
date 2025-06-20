@@ -1,211 +1,214 @@
-<div class="bc-flex bc-flex-col bc-gap-12 bc-flex-1 bc-justify-center bc-items-center">
-    <div data-aos="zoom-in">
-        <img
-            class="avatar"
-            ngSrc="assets/images/home/photo1.png"
-            width="200"
-            height="200"
-            priority=""
-            bcOnloadFadeIn
-            alt="Author avatar"
-        >
-    </div>
-    <div class="info-container bc-flex bc-flex-col bc-gap-24 bc-items-center bc-w-full bc-pb-16">
-        <div
-            class="bc-flex bc-flex-col bc-items-center"
-            data-aos-anchor=".info-container"
-            data-aos="zoom-in"
-            data-aos-delay="50"
-        >
-            <h1 class="bc-h bc-text-center">Stanislav Stolbennikov</h1>
-            <h2 class="bc-h bc-text-center bc-text-light-color">Software Engineer</h2>
-        </div>
-
-        <!-- Контакты -->
-        <!-- https://icons8.ru/icon/set/%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF%D1%8B/ios-glyphs -->
-        <ul
-            class="bc-flex bc-gap-12"
-            data-aos-anchor=".info-container"
-            data-aos="zoom-in"
-            data-aos-delay="100"
-        >
-            @for (item of contactsList; track item.link) {
-                <li>
-                    <a
-                        class="bc-block bc-text-default-color bc-animation-zoom"
-                        target="_blank"
-                        [href]="item.link"
-                    >
-                        <ng-container *ngComponentOutlet="item.icon"></ng-container>
-                    </a>
-                </li>
-            }
-        </ul>
-
-        <div
-            class="bc-flex bc-flex-col bc-gap-8"
-            data-aos="zoom-in"
-            data-aos-delay="200"
-        >
-            <h3 class="bc-h bc-text-center">🚀 Welcome to My Digital Space!<br /></h3>
-
-            <div class="bc-flex bc-flex-col">
-                <p class="bc-text-center">Hi there! I'm a Frontend Developer passionate about crafting clean,
-                    responsive,
-                    and user-friendly web experiences.</p>
-
-                <p class="bc-text-center">With a strong focus on Angular, I turn ideas into dynamic, scalable
-                    applications.</p>
-
-                <p class="bc-text-center">Explore my projects, skills, and let’s build something amazing together!</p>
-            </div>
-
-            <h3 class="bc-h bc-text-center">Code. Create. Collaborate.</h3>
-
-        </div>
-    </div>
-</div>
-
-<div class="bc-flex bc-flex-col bc-gap-12 bc-flex-wrap bc-items-center">
-    <bc-card
-        header="💼 Career timeline"
-        data-aos="fade-right"
-    >
-        <ng-template #contentTemplate>
-            <span>Click on a position for more information</span>
-            <bc-career-timeline [jobExperience]="jobExperience"></bc-career-timeline>
-        </ng-template>
-    </bc-card>
-
-    <bc-card
-        header="🛠️ Skills and expirience"
-        data-aos="fade-left"
-    >
-        <ng-template #contentTemplate>
-            <div class="bc-flex bc-gap-8-4 bc-items-center bc-justify-center bc-flex-wrap">
-                @for (skill of skillsList; track skill.name) {
-                    <bc-tag class="bc-self-stretch">
-                        <div class="bc-flex bc-flex-col bc-gap-4 bc-items-center bc-justify-center bc-font-patua-one">
-                            {{ skill.name }}
-
-                            @if (skill.level) {
-                                <bc-level-indicator [level]="skill.level"></bc-level-indicator>
-                            }
-                        </div>
-                    </bc-tag>
-                }
-            </div>
-        </ng-template>
-    </bc-card>
-
-    <bc-card
-        id="Education"
-        header="🎓 Education"
-        data-aos="fade-right"
-    >
-        <ng-template #contentTemplate>
-            <ul class="bc-flex bc-flex-col bc-gap-8">
-                <li
-                    class="bc-flex bc-gap-8"
-                    data-aos-anchor="#Education"
-                    data-aos="fade-right"
-                    data-aos-duration="1000"
-                    data-aos-delay="200"
-                >
-                    📜
-                    <div class="bc-flex bc-flex-col">
-                        <h4 class="bc-h">High school diploma, 2014</h4>
-                        <p>Novosibirsk State University Higher College of Informatics</p>
-                    </div>
-                </li>
-                <li
-                    class="bc-flex bc-gap-8"
-                    data-aos-anchor="#Education"
-                    data-aos="fade-right"
-                    data-aos-duration="1000"
-                    data-aos-delay="400"
-                >
-                    📜
-                    <div class="bc-flex bc-flex-col">
-                        <h4 class="bc-h">Diploma in System Software, 2021</h4>
-                        <p>Siberian State University of Telecommunications and Information Sciences</p>
-                    </div>
-                </li>
-            </ul>
-        </ng-template>
-    </bc-card>
-
-    <bc-card
-        id="Interests"
-        header="🌱 My Interests & Learning Path"
-        data-aos="fade-left"
-    >
-        <ng-template #contentTemplate>
-            <b>I’m passionate about technology beyond Frontend—currently exploring:</b>
-
-            <ul class="bc-flex bc-flex-col bc-gap-8">
-                <li
-                    class="bc-flex bc-gap-8"
-                    data-aos-anchor="#Interests"
-                    data-aos="fade-left"
-                    data-aos-duration="1000"
-                    data-aos-delay="200"
-                >
-                    👨‍💻
-                    <div class="bc-flex bc-flex-col">
-                        <h4 class="bc-h">Backend Development:</h4>
-                        <span>Experimenting with Bun and Elysia.js for lightweight server-side solutions.</span>
-                    </div>
-                </li>
-                <li
-                    class="bc-flex bc-gap-8"
-                    data-aos-anchor="#Interests"
-                    data-aos="fade-left"
-                    data-aos-duration="1000"
-                    data-aos-delay="400"
-                >
-                    🦀
-                    <div class="bc-flex bc-flex-col">
-                        <h4 class="bc-h">Rust:</h4>
-                        <span>Learning the basics to write performant, safe code (future Web3 ambitions).</span>
-                    </div>
-                </li>
-                <li
-                    class="bc-flex bc-gap-8"
-                    data-aos-anchor="#Interests"
-                    data-aos="fade-left"
-                    data-aos-duration="1000"
-                    data-aos-delay="600"
-                >
-                    📦
-                    <div class="bc-flex bc-flex-col">
-                        <h4 class="bc-h">Web3:</h4>
-                        <span>Diving into blockchain concepts to eventually transition into decentralized apps.</span>
-                    </div>
-                </li>
-                <li
-                    class="bc-flex bc-gap-8"
-                    data-aos-anchor="#Interests"
-                    data-aos="fade-left"
-                    data-aos-duration="1000"
-                    data-aos-delay="800"
-                >
-                    🎮
-                    <div class="bc-flex bc-flex-col">
-                        <h4 class="bc-h">Game Dev:</h4>
-                        <span>Dreaming of building my own MMORPG—starting with small prototypes.</span>
-                    </div>
-                </li>
-            </ul>
-
-            <b
-                data-aos="fade-left"
-                data-aos-anchor="#Interests"
-                data-aos-duration="1000"
-                data-aos-delay="1000"
+<div class="home-page-container bc-flex bc-flex-col bc-gap-24 bc-flex-1 bc-items-center">
+    <div class="bc-flex bc-flex-col bc-gap-12 bc-flex-1 bc-justify-center bc-items-center">
+        <div data-aos="zoom-in">
+            <img
+                class="avatar"
+                ngSrc="assets/images/home/photo1.png"
+                width="200"
+                height="200"
+                priority=""
+                bcOnloadFadeIn
+                alt="Author avatar"
             >
-                Curiosity-driven, always expanding the stack!
-            </b>
-        </ng-template>
-    </bc-card>
+        </div>
+        <div class="info-container bc-flex bc-flex-col bc-gap-24 bc-items-center bc-w-full bc-pb-16">
+            <div
+                class="bc-flex bc-flex-col bc-items-center"
+                data-aos-anchor=".info-container"
+                data-aos="zoom-in"
+                data-aos-delay="50"
+            >
+                <h1 class="bc-h bc-text-center">Stanislav Stolbennikov</h1>
+                <h2 class="bc-h bc-text-center bc-text-light-color">Software Engineer</h2>
+            </div>
+
+            <!-- Контакты -->
+            <!-- https://icons8.ru/icon/set/%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF%D1%8B/ios-glyphs -->
+            <ul
+                class="bc-flex bc-gap-12"
+                data-aos-anchor=".info-container"
+                data-aos="zoom-in"
+                data-aos-delay="100"
+            >
+                @for (item of contactsList; track item.link) {
+                    <li>
+                        <a
+                            class="bc-block bc-text-default-color bc-animation-zoom"
+                            target="_blank"
+                            [href]="item.link"
+                        >
+                            <ng-container *ngComponentOutlet="item.icon"></ng-container>
+                        </a>
+                    </li>
+                }
+            </ul>
+
+            <div
+                class="bc-flex bc-flex-col bc-gap-8"
+                data-aos="zoom-in"
+                data-aos-delay="200"
+            >
+                <h3 class="bc-h bc-text-center">🚀 Welcome to My Digital Space!<br /></h3>
+
+                <div class="bc-flex bc-flex-col">
+                    <p class="bc-text-center">Hi there! I'm a Frontend Developer passionate about crafting clean,
+                        responsive,
+                        and user-friendly web experiences.</p>
+
+                    <p class="bc-text-center">With a strong focus on Angular, I turn ideas into dynamic, scalable
+                        applications.</p>
+
+                    <p class="bc-text-center">Explore my projects, skills, and let’s build something amazing
+                        together!</p>
+                </div>
+
+                <h3 class="bc-h bc-text-center">Code. Create. Collaborate.</h3>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="bc-flex bc-flex-col bc-gap-12 bc-flex-wrap bc-items-center">
+        <bc-card
+            header="💼 Career timeline"
+            data-aos="fade-right"
+        >
+            <ng-template #contentTemplate>
+                <span>Click on a position for more information</span>
+                <bc-career-timeline [jobExperience]="jobExperience"></bc-career-timeline>
+            </ng-template>
+        </bc-card>
+
+        <bc-card
+            header="🛠️ Skills and expirience"
+            data-aos="fade-left"
+        >
+            <ng-template #contentTemplate>
+                <div class="bc-flex bc-gap-8-4 bc-items-center bc-justify-center bc-flex-wrap">
+                    @for (skill of skillsList; track skill.name) {
+                        <bc-tag class="bc-self-stretch">
+                            <div class="bc-flex bc-flex-col bc-gap-4 bc-items-center bc-justify-center bc-font-patua-one">
+                                {{ skill.name }}
+
+                                @if (skill.level) {
+                                    <bc-level-indicator [level]="skill.level"></bc-level-indicator>
+                                }
+                            </div>
+                        </bc-tag>
+                    }
+                </div>
+            </ng-template>
+        </bc-card>
+
+        <bc-card
+            id="Education"
+            header="🎓 Education"
+            data-aos="fade-right"
+        >
+            <ng-template #contentTemplate>
+                <ul class="bc-flex bc-flex-col bc-gap-8">
+                    <li
+                        class="bc-flex bc-gap-8"
+                        data-aos-anchor="#Education"
+                        data-aos="fade-right"
+                        data-aos-duration="1000"
+                        data-aos-delay="200"
+                    >
+                        📜
+                        <div class="bc-flex bc-flex-col">
+                            <h4 class="bc-h">High school diploma, 2014</h4>
+                            <p>Novosibirsk State University Higher College of Informatics</p>
+                        </div>
+                    </li>
+                    <li
+                        class="bc-flex bc-gap-8"
+                        data-aos-anchor="#Education"
+                        data-aos="fade-right"
+                        data-aos-duration="1000"
+                        data-aos-delay="400"
+                    >
+                        📜
+                        <div class="bc-flex bc-flex-col">
+                            <h4 class="bc-h">Diploma in System Software, 2021</h4>
+                            <p>Siberian State University of Telecommunications and Information Sciences</p>
+                        </div>
+                    </li>
+                </ul>
+            </ng-template>
+        </bc-card>
+
+        <bc-card
+            id="Interests"
+            header="🌱 My Interests & Learning Path"
+            data-aos="fade-left"
+        >
+            <ng-template #contentTemplate>
+                <b>I’m passionate about technology beyond Frontend—currently exploring:</b>
+
+                <ul class="bc-flex bc-flex-col bc-gap-8">
+                    <li
+                        class="bc-flex bc-gap-8"
+                        data-aos-anchor="#Interests"
+                        data-aos="fade-left"
+                        data-aos-duration="1000"
+                        data-aos-delay="200"
+                    >
+                        👨‍💻
+                        <div class="bc-flex bc-flex-col">
+                            <h4 class="bc-h">Backend Development:</h4>
+                            <span>Experimenting with Bun and Elysia.js for lightweight server-side solutions.</span>
+                        </div>
+                    </li>
+                    <li
+                        class="bc-flex bc-gap-8"
+                        data-aos-anchor="#Interests"
+                        data-aos="fade-left"
+                        data-aos-duration="1000"
+                        data-aos-delay="400"
+                    >
+                        🦀
+                        <div class="bc-flex bc-flex-col">
+                            <h4 class="bc-h">Rust:</h4>
+                            <span>Learning the basics to write performant, safe code (future Web3 ambitions).</span>
+                        </div>
+                    </li>
+                    <li
+                        class="bc-flex bc-gap-8"
+                        data-aos-anchor="#Interests"
+                        data-aos="fade-left"
+                        data-aos-duration="1000"
+                        data-aos-delay="600"
+                    >
+                        📦
+                        <div class="bc-flex bc-flex-col">
+                            <h4 class="bc-h">Web3:</h4>
+                            <span>Diving into blockchain concepts to eventually transition into decentralized apps.</span>
+                        </div>
+                    </li>
+                    <li
+                        class="bc-flex bc-gap-8"
+                        data-aos-anchor="#Interests"
+                        data-aos="fade-left"
+                        data-aos-duration="1000"
+                        data-aos-delay="800"
+                    >
+                        🎮
+                        <div class="bc-flex bc-flex-col">
+                            <h4 class="bc-h">Game Dev:</h4>
+                            <span>Dreaming of building my own MMORPG—starting with small prototypes.</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <b
+                    data-aos="fade-left"
+                    data-aos-anchor="#Interests"
+                    data-aos-duration="1000"
+                    data-aos-delay="1000"
+                >
+                    Curiosity-driven, always expanding the stack!
+                </b>
+            </ng-template>
+        </bc-card>
+    </div>
 </div>

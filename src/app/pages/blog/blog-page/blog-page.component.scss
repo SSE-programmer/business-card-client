@@ -1,9 +1,11 @@
 :host {
     display: flex;
     flex-direction: column;
+    align-items: center;
     flex: 1;
+    width: 100%;
 
-    .blog-page {
+    .blog-page-container {
         max-width: 900px;
     }
 

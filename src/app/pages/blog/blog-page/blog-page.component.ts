@@ -23,8 +23,6 @@ import { LoadingSpinnerComponent } from '@components/loading-spinner/loading-spi
 export class BlogPageComponent {
     private readonly telegramHttpService = inject(TelegramHttpService);
 
-    @HostBinding('class.bc-page') bcPage = true;
-
     private _postsResource = this.telegramHttpService.getPostsResource();
 
     public postsSignal: Signal<ITelegramMessage[]> = computed(() => {
