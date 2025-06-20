@@ -83,9 +83,7 @@ export class DynamicModalService {
     public open(componentType: Type<any>, config: DynamicModalConfig): DynamicModalRef {
         this._checkConfigRequiredParameters(config);
 
-        const modalRef = this.appendModalComponentToBody(componentType, config);
-
-        return modalRef;
+        return this.appendModalComponentToBody(componentType, config);
     }
 
     public closeModal(modalName: string, force = false, restore = false): boolean {
