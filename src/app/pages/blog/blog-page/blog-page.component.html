@@ -4,7 +4,10 @@
         <p>
             How about keeping up with the latest developments with me?
             <br>
-            Join my <a class="bc-link bc-font-patua-one" href="https://t.me/+RzFuZVkI3yllNjEy">Telegram channel</a>
+            Join my <a
+            class="bc-link bc-font-patua-one"
+            href="https://t.me/+RzFuZVkI3yllNjEy"
+        >Telegram channel</a>
             to share your comments and reactions!"
         </p>
     </div>
@@ -12,10 +15,11 @@
     @let posts = postsSignal();
     @let postsIsLoading = postsLoadingSignal();
 
-    @if (postsIsLoading) {
-        <bc-loading-spinner class="bc-absolute-center"></bc-loading-spinner>
-    } @else if (posts?.length) {
-        <div class="posts-container bc-flex bc-flex-col bc-gap-48 bc-self-center">
+
+    <div class="posts-container bc-flex bc-flex-col bc-gap-48 bc-self-center">
+        @if (postsIsLoading) {
+            <bc-loading-spinner class="bc-absolute-center"></bc-loading-spinner>
+        } @else if (posts?.length) {
             @for (post of posts; track postsTrackBy(post)) {
                 <bc-post [post]="post"></bc-post>
 
@@ -23,10 +27,10 @@
                     <div class="bc-w-full bc-h-min bc-default-border"></div>
                 }
             }
-        </div>
-    } @else {
-        <div class="bc-flex bc-flex-col bc-justify-center bc-items-center bc-flex-1">
-            <span class="bc-font-patua-one bc-text-center">It's empty here for now</span>
-        </div>
-    }
+        } @else {
+            <div class="bc-flex bc-flex-col bc-justify-center bc-items-center bc-flex-1">
+                <span class="bc-font-patua-one bc-text-center">It's empty here for now</span>
+            </div>
+        }
+    </div>
 </div>

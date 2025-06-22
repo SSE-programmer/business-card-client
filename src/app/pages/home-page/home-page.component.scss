@@ -6,7 +6,7 @@
     width: 100%;
 
     .home-page-container {
-        max-width: 1200px;
+        max-width: min(100%, 1200px);
     }
 
     .avatar {
