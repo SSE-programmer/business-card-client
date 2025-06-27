@@ -15,11 +15,12 @@
     @let posts = postsSignal();
     @let postsIsLoading = postsLoadingSignal();
 
-
-    <div class="posts-container bc-flex bc-flex-col bc-gap-48 bc-self-center">
-        @if (postsIsLoading) {
+    @if (postsIsLoading) {
+        <div class="bc-relative bc-flex bc-flex-col bc-self-center bc-flex-1">
             <bc-loading-spinner class="bc-absolute-center"></bc-loading-spinner>
-        } @else if (posts?.length) {
+        </div>
+    } @else if (posts?.length) {
+        <div class="posts-container bc-flex bc-flex-col bc-gap-48 bc-self-center">
             @for (post of posts; track postsTrackBy(post)) {
                 <bc-post [post]="post"></bc-post>
 
