@@ -8,7 +8,7 @@ import {
     HostListener,
     inject,
     OnDestroy,
-    OnInit, Renderer2,
+    OnInit, Renderer2, signal,
     viewChild,
 } from '@angular/core';
 import { BehaviorSubject, debounceTime, fromEvent, Subscription, tap, throttleTime } from 'rxjs';
@@ -36,7 +36,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     protected readonly Math = Math;
 
     public readonly config = inject(ImageViewerConfig);
-    private readonly cd = inject(ChangeDetectorRef);
     private readonly imageViewerService = inject(ImageViewerService);
     private readonly elementRef = inject(ElementRef);
     private readonly renderer2 = inject(Renderer2);
@@ -44,14 +43,15 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
     public componentRef: ComponentRef<any> | null = null;
     public selectedMediaIndex = this.config.selectedMediaIndex;
-    private _moveDeltaX$ = new BehaviorSubject(0);
-    public moveDeltaX$ = this._moveDeltaX$.asObservable();
+    protected moveDeltaX = signal(0);
+    protected moveDeltaY = signal(0);
 
     private _resizeObserver: ResizeObserver | null = null;
     private _selectedIndexAnimationTimeoutId: number | null = null;
-    private startMoveX = 0;
-    private isDragging = false;
-    private subscriptions = new Subscription();
+    private _startMoveX = 0;
+    private _startMoveY = 0;
+    private _isDragging = false;
+    private _subscriptions = new Subscription();
 
     public selectedIndex = viewChild.required('selectedIndex', { read: ElementRef });
 
@@ -59,7 +59,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     public onKeydownHandler(event: KeyboardEvent) {
         switch (event.key) {
             case 'Escape':
-                this.closeModal();
+                this.closeViewer();
                 break;
             case 'ArrowLeft':
                 this.switchMedia('left');
@@ -81,7 +81,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
         this._setupEventListeners();
     }
 
-    public closeModal(): void {
+    public closeViewer(): void {
         this.imageViewerService.closeModal();
     }
 
@@ -97,7 +97,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
             clearTimeout(this._selectedIndexAnimationTimeoutId);
         }
 
-        this.subscriptions.unsubscribe();
+        this._subscriptions.unsubscribe();
     }
 
     protected switchMedia(direction: 'left' | 'right') {
@@ -136,71 +136,82 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
         const mouseUp$ = fromEvent<MouseEvent>(element, 'mouseup');
         const mouseLeave$ = fromEvent<MouseEvent>(element, 'mouseleave');
 
-        this.subscriptions.add(
-            touchStart$.subscribe(e => this.startDrag(e.touches[0].pageX)),
+        this._subscriptions.add(
+            touchStart$.subscribe(e => this._startDrag(e.touches[0].pageX, e.touches[0].pageY)),
         );
 
-        this.subscriptions.add(
+        this._subscriptions.add(
             mouseDown$
                 .pipe(tap((e) => {
                     e.preventDefault();
-                    this.startDrag(e.pageX);
+                    this._startDrag(e.pageX, e.pageY);
                 }))
                 .subscribe(),
         );
 
         const move$ = touchMove$.pipe(
             throttleTime(MOUSE_MOVE_TROTTLE_TIME),
-            tap((e) => this.drag(e.touches[0].pageX)),
+            tap((e) => this._drag(e.touches[0].pageX, e.touches[0].pageY)),
         );
 
-        this.subscriptions.add(
+        this._subscriptions.add(
             move$.subscribe(),
         );
 
-        this.subscriptions.add(
+        this._subscriptions.add(
             mouseMove$.pipe(
                 throttleTime(MOUSE_MOVE_TROTTLE_TIME),
                 tap(e => {
-                    if (this.isDragging) {
+                    if (this._isDragging) {
                         e.preventDefault();
-                        this.drag(e.pageX);
+                        this._drag(e.pageX, e.pageY);
                     }
                 }),
             ).subscribe(),
         );
 
-        const end$ = touchEnd$.subscribe(() => this.endDrag());
-        const mouseEnd$ = mouseUp$.subscribe(() => this.endDrag());
-        const mouseLeaveSub$ = mouseLeave$.subscribe(() => this.endDrag());
+        const end$ = touchEnd$.subscribe(() => this._endDrag());
+        const mouseEnd$ = mouseUp$.subscribe(() => this._endDrag());
+        const mouseLeaveSub$ = mouseLeave$.subscribe(() => this._endDrag());
 
-        this.subscriptions.add(end$);
-        this.subscriptions.add(mouseEnd$);
-        this.subscriptions.add(mouseLeaveSub$);
+        this._subscriptions.add(end$);
+        this._subscriptions.add(mouseEnd$);
+        this._subscriptions.add(mouseLeaveSub$);
     }
 
-    private startDrag(pageX: number) {
-        this.isDragging = true;
-        this.startMoveX = pageX - this.elementRef.nativeElement.offsetLeft;
+    private _startDrag(pageX: number, pageY: number): void {
+        this._isDragging = true;
+        this._startMoveX = pageX - this.elementRef.nativeElement.offsetLeft;
+        this._startMoveY = pageY;
     }
 
-    private drag(pageX: number) {
-        if (!this.isDragging) {
+    private _drag(pageX: number, pageY: number): void {
+        if (!this._isDragging) {
             return;
         }
 
-        this._moveDeltaX$.next(pageX - this.startMoveX);
+        this.moveDeltaX.set(pageX - this._startMoveX);
+        this.moveDeltaY.set(pageY - this._startMoveY);
     }
 
-    private endDrag() {
-        this.isDragging = false;
+    private _endDrag() {
+        this._isDragging = false;
 
-        const moveDeltaX = this._moveDeltaX$.value;
+        const moveDeltaX = this.moveDeltaX();
 
         if (Math.abs(moveDeltaX) > this.elementRef.nativeElement.offsetWidth / 2) {
             this.switchMedia(moveDeltaX > 0 ? 'left' : 'right');
         }
 
-        this._moveDeltaX$.next(0);
+        const moveDeltaY = this.moveDeltaY();
+
+        console.log(Math.abs(moveDeltaY), this.elementRef.nativeElement.offsetHeight / 2);
+
+        if (Math.abs(moveDeltaY) > this.elementRef.nativeElement.offsetHeight / 3) {
+            this.closeViewer();
+        }
+
+        this.moveDeltaX.set(0);
+        this.moveDeltaY.set(0);
     }
 }

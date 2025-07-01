@@ -11,6 +11,7 @@
     box-sizing: border-box;
     text-decoration: none;
     margin: 0;
+    -webkit-tap-highlight-color: transparent;
 
     &::-webkit-scrollbar {
         display: none;

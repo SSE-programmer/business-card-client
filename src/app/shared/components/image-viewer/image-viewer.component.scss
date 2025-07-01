@@ -1,5 +1,8 @@
 :host {
     --image-viewer-wrapper-background: #34344e60;
+
+    position: absolute;
+    inset: 0;
 }
 
 :host-context(.bc-theme-blue) {

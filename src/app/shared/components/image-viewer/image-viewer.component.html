@@ -22,17 +22,17 @@
     }
 
     <div class="image-viewer">
-        <div
-            class="close-button bc-flex bc-items-center bc-justify-end bc-w-full bc-h-fit bc-text-34"
-            role="button"
-            (click)="closeModal(); $event.stopPropagation()"
-            (keydown.enter)="closeModal()"
-            tabindex="0"
-        >✖
+        <div class="bc-flex bc-items-center bc-justify-end bc-w-full">
+            <div
+                class="close-button bc-flex bc-items-center bc-h-fit bc-text-34"
+                role="button"
+                (click)="closeViewer(); $event.stopPropagation()"
+                (keydown.enter)="closeViewer()"
+                tabindex="0"
+            >✖
+            </div>
         </div>
         <div class="media-container bc-flex bc-gap-12">
-            @let moveDeltaX = moveDeltaX$ | async;
-
             @for (mediaItem of config.media; track mediaItem.photoUrl) {
                 @if (Math.abs($index - selectedMediaIndex) < 2) {
                     <img
@@ -40,7 +40,8 @@
                         [class.active]="$index === selectedMediaIndex"
                         [class.left]="$index < selectedMediaIndex"
                         [class.right]="$index > selectedMediaIndex"
-                        [style.transform]="$index === selectedMediaIndex ? 'translateX(' + moveDeltaX + 'px)' : null"
+                        [style.transform]="$index === selectedMediaIndex ?
+                         'translate(' + moveDeltaX() + 'px, ' + moveDeltaY() / 2 + 'px)' : null"
                         [src]="mediaItem.photoUrl"
                         alt="Some media"
                     >
