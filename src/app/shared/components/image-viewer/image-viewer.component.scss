@@ -1,0 +1,109 @@
+:host {
+    --image-viewer-wrapper-background: #34344e60;
+}
+
+:host-context(.bc-theme-blue) {
+    --image-viewer-wrapper-background: #34344e60;
+}
+
+:host-context(.bc-theme-red) {
+    --image-viewer-wrapper-background: #502c2c60;
+}
+
+:host-context(.bc-theme-yellow) {
+    --image-viewer-wrapper-background: #40420560;
+}
+
+:host-context(.bc-theme-green) {
+    --image-viewer-wrapper-background: #1a450460;
+}
+
+:host-context(.bc-theme-black) {
+    --image-viewer-wrapper-background: #22222260;
+}
+
+.image-viewer-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    background-color: var(--image-viewer-wrapper-background);
+
+    animation: fade-in var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
+
+    &.closed {
+        animation: fade-out var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
+    }
+
+    .image-viewer {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bc-gap-24);
+        width: 100%;
+        max-width: min(calc(100% - 20px), var(--bc-page-container-max-width));
+        height: auto;
+        max-height: min(95%, 700px);
+        background-color: var(--bc-bg-modals-color);
+        border: 3px solid var(--bc-border-default-color);
+        border-radius: var(--bc-border-radius-16);
+        box-shadow: var(--bc-modals-box-shadow);
+        overflow: auto;
+
+        @media (max-width: 720px) {
+            max-width: calc(100% - 4px);
+        }
+
+        &.transition {
+            transition: width var(--bc-transition-duration-default);
+        }
+
+        &__body {
+            display: flex;
+            flex-direction: column;
+            padding: var(--bc-padding-24) var(--bc-padding-24);
+            height: auto;
+            max-height: 100%;
+            overflow: hidden;
+
+            @media (max-width: 1040px) {
+                padding: var(--bc-padding-24) var(--bc-padding-16);
+            }
+        }
+
+        ng-template {
+            overflow: auto;
+        }
+
+        &::-webkit-scrollbar {
+            display: none;
+            width: 0;
+        }
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

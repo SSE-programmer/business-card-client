@@ -10,6 +10,7 @@
                 class="media"
                 [src]="mediaItem.photoUrl"
                 alt="Post`s media"
+                (click)="mediaClick.emit({ event: $event, media, index: $index})"
             >
 
             @if ($index + 1 === MAX_VISIBLE_MEDIA_COUNT && media.length > MAX_VISIBLE_MEDIA_COUNT) {
