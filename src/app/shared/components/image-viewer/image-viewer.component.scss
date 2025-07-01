@@ -52,10 +52,10 @@
         align-items: center;
         justify-content: center;
         width: 20%;
+        max-width: 150px;
         text-shadow: 0 0 8px var(--bc-bg-light-color);
         opacity: 0;
         transition: opacity var(--bc-transition-duration-default);
-        cursor: pointer;
         user-select: none;
 
         font-family: "Patua One", serif;
@@ -107,6 +107,9 @@
                 object-fit: contain;
                 transform: translateX(0);
                 transition: transform, .5s, opacity, .5s;
+                -webkit-user-drag: none;
+                user-drag: none;
+                user-select: none;
 
                 &:not(.active) {
                     opacity: 0;
@@ -129,6 +132,12 @@
                 border: 2px solid var(--bc-bg-light-color);
                 opacity: 0;
                 transition: opacity, .5s;
+                user-select: none;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 1;
+                }
 
                 &.visible {
                     opacity: 1;

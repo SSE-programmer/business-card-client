@@ -1,19 +1,38 @@
 <aside class="image-viewer-wrapper">
-    <div class="switch-button left"><</div>
-    <div class="switch-button right">></div>
-    <div
-        class="image-viewer"
-        #imageViewer
-    >
+    @if (selectedMediaIndex > 0) {
+        <div
+            class="switch-button left"
+            (click)="switchMedia('left')"
+            role="button"
+            tabindex="0"
+        >
+            <
+        </div>
+    }
+
+    @if (selectedMediaIndex < config.media.length - 1) {
+        <div
+            class="switch-button right"
+            (click)="switchMedia('right')"
+            role="button"
+            tabindex="0"
+        >
+            >
+        </div>
+    }
+
+    <div class="image-viewer">
         <div
             class="close-button bc-flex bc-items-center bc-justify-end bc-w-full bc-h-fit bc-text-34"
             role="button"
-            (click)="closeModal()"
+            (click)="closeModal(); $event.stopPropagation()"
             (keydown.enter)="closeModal()"
             tabindex="0"
         >✖
         </div>
         <div class="media-container bc-flex bc-gap-12">
+            @let moveDeltaX = moveDeltaX$ | async;
+
             @for (mediaItem of config.media; track mediaItem.photoUrl) {
                 @if (Math.abs($index - selectedMediaIndex) < 2) {
                     <img
@@ -21,6 +40,7 @@
                         [class.active]="$index === selectedMediaIndex"
                         [class.left]="$index < selectedMediaIndex"
                         [class.right]="$index > selectedMediaIndex"
+                        [style.transform]="$index === selectedMediaIndex ? 'translateX(' + moveDeltaX + 'px)' : null"
                         [src]="mediaItem.photoUrl"
                         alt="Some media"
                     >
@@ -31,7 +51,7 @@
                 class="selected-index bc-self-center bc-font-patua-one"
                 #selectedIndex
             >
-                {{selectedMediaIndex + 1}} of {{config.media.length}}
+                {{ selectedMediaIndex + 1 }} of {{ config.media.length }}
             </bc-tag>
         </div>
     </div>
