@@ -30,6 +30,8 @@ body {
     font-family: "Alegreya", serif;
     color: var(--bc-text-default-color);
     font-size: var(--bc-font-size-default);
+
+    overscroll-behavior: none;
 }
 
 router-outlet {

@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from '@angular/core';
 import { ITelegramMessage } from '@services/http-services/telegram-http/models/ITelegramMessage';
 import { DatePipe, UpperCasePipe } from '@angular/common';
-import { MediaGridComponent } from '../media-grid/media-grid.component';
+import { IMediaEvent, MediaGridComponent } from '../media-grid/media-grid.component';
 import { DynamicModalService } from '@components/dynamic-modal/dynamic-modal.service';
 import { PostModalComponent } from './components/post-modal/post-modal.component';
 import { TagComponent } from '@components/tag/tag.component';
 import { IconCommentsComponent } from '@components/icons/icon-comments/icon-comments.component';
 import { IconViewsComponent } from '@components/icons/icon-views/icon-views.component';
+import { ImageViewerService } from '@components/image-viewer/image-viewer.service';
 
 @Component({
     selector: 'bc-post',
@@ -24,6 +25,7 @@ import { IconViewsComponent } from '@components/icons/icon-views/icon-views.comp
 })
 export class PostComponent {
     private readonly dynamicModalService = inject(DynamicModalService);
+    private readonly imageViewerService = inject(ImageViewerService);
 
     public readonly postSignal: InputSignal<ITelegramMessage> = input.required({ alias: 'post' });
     public readonly MAX_TEXT_VISIBLE_LENGTH = 500;
@@ -42,6 +44,13 @@ export class PostComponent {
                     width: '100%',
                 },
             ],
+        });
+    }
+
+    public openImageViewer($event: IMediaEvent<MouseEvent>) {
+        this.imageViewerService.open({
+            media: $event.media,
+            selectedMediaIndex: $event.index,
         });
     }
 }
