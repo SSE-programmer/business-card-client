@@ -18,6 +18,7 @@ import { debounceTime, fromEvent } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DynamicModalService } from './dynamic-modal.service';
 import { DynamicModalConfig } from './dynamic-modal.config';
+import { ImageViewerService } from '@components/image-viewer/image-viewer.service';
 
 @Component({
     selector: 'bc-dynamic-modal',
@@ -34,6 +35,7 @@ export class DynamicModalComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly cd = inject(ChangeDetectorRef);
     private readonly dynamicModalService = inject(DynamicModalService);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly imageViewerService = inject(ImageViewerService);
 
     public childComponentType: Type<any> | null = null;
     public componentRef: ComponentRef<any> | null = null;
@@ -54,6 +56,10 @@ export class DynamicModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @HostListener('document:keydown.escape')
     public onKeydownHandler() {
+        if (this.imageViewerService.viewerComponentRef) {
+            return;
+        }
+
         this.closeModal();
     }
 

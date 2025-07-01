@@ -17,7 +17,10 @@
         @let media = post.media;
 
         @if (media && media.length) {
-            <bc-media-grid [media]="media"></bc-media-grid>
+            <bc-media-grid
+                [media]="media"
+                (mediaClick)="openImageViewer($event)"
+            ></bc-media-grid>
         }
 
         @if (post.text) {
