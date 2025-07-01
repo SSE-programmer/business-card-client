@@ -199,15 +199,13 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
         const moveDeltaX = this.moveDeltaX();
 
-        if (Math.abs(moveDeltaX) > this.elementRef.nativeElement.offsetWidth / 2) {
+        if (Math.abs(moveDeltaX) > Math.min(150, this.elementRef.nativeElement.offsetWidth / 3)) {
             this.switchMedia(moveDeltaX > 0 ? 'left' : 'right');
         }
 
         const moveDeltaY = this.moveDeltaY();
 
-        console.log(Math.abs(moveDeltaY), this.elementRef.nativeElement.offsetHeight / 2);
-
-        if (Math.abs(moveDeltaY) > this.elementRef.nativeElement.offsetHeight / 3) {
+        if (Math.abs(moveDeltaY) > Math.min(150, this.elementRef.nativeElement.offsetHeight / 3)) {
             this.closeViewer();
         }
 
