@@ -20,6 +20,8 @@ import { AsyncPipe } from '@angular/common';
 
 const SELECTED_INDEX_VISIBILITY_TIME = 2000;
 const MOUSE_MOVE_TROTTLE_TIME = 16;
+const MIN_PIXELS_PER_SECONDS_FOR_SWITCH = 100;
+const MIN_COORDINATE_DELTA_FOR_SWITCH = 100;
 
 @Component({
     selector: 'bc-image-viewer',
@@ -44,11 +46,13 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     public componentRef: ComponentRef<any> | null = null;
     public selectedMediaIndex = this.config.selectedMediaIndex;
     protected moveDeltaX = signal(0);
+    protected moveXSpeed = signal(0);
     protected moveDeltaY = signal(0);
 
     private _resizeObserver: ResizeObserver | null = null;
     private _selectedIndexAnimationTimeoutId: number | null = null;
     private _startMoveX = 0;
+    private _startMoveTime = 0;
     private _startMoveY = 0;
     private _isDragging = false;
     private _subscriptions = new Subscription();
@@ -181,6 +185,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
     private _startDrag(pageX: number, pageY: number): void {
         this._isDragging = true;
+        this._startMoveTime = new Date().getTime();
         this._startMoveX = pageX - this.elementRef.nativeElement.offsetLeft;
         this._startMoveY = pageY;
     }
@@ -198,14 +203,19 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
         this._isDragging = false;
 
         const moveDeltaX = this.moveDeltaX();
+        const moveXTime = new Date().getTime() - this._startMoveTime;
+        const moveXSpeed = moveDeltaX * 1000 / moveXTime;
 
-        if (Math.abs(moveDeltaX) > Math.min(150, this.elementRef.nativeElement.offsetWidth / 3)) {
+        const minDeltaForSwitch = Math.min(MIN_COORDINATE_DELTA_FOR_SWITCH, this.elementRef.nativeElement.offsetWidth / 3);
+        const minDeltaSpeedForSwitch = MIN_PIXELS_PER_SECONDS_FOR_SWITCH;
+
+        if (Math.abs(moveDeltaX) > minDeltaForSwitch || moveXSpeed >= minDeltaSpeedForSwitch) {
             this.switchMedia(moveDeltaX > 0 ? 'left' : 'right');
         }
 
         const moveDeltaY = this.moveDeltaY();
 
-        if (Math.abs(moveDeltaY) > Math.min(150, this.elementRef.nativeElement.offsetHeight / 3)) {
+        if (Math.abs(moveDeltaY) > Math.min(MIN_COORDINATE_DELTA_FOR_SWITCH, this.elementRef.nativeElement.offsetHeight / 3)) {
             this.closeViewer();
         }
 
