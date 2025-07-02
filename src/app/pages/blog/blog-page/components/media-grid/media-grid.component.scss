@@ -32,10 +32,7 @@
         overflow: hidden;
 
         transition: border var(--bc-transition-duration-default),
-        box-shadow var(--bc-transition-duration-default),
-        transform var(--bc-transition-duration-default);
-        will-change: transform;
-
+        box-shadow var(--bc-transition-duration-default);
         cursor: pointer;
 
         .additional-media-count-container {
