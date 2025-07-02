@@ -1,6 +1,5 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     ComponentRef,
     DestroyRef,
@@ -11,7 +10,7 @@ import {
     OnInit, Renderer2, signal,
     viewChild,
 } from '@angular/core';
-import { BehaviorSubject, debounceTime, fromEvent, Subscription, tap, throttleTime } from 'rxjs';
+import { debounceTime, fromEvent, Subscription, tap, throttleTime } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ImageViewerService } from './image-viewer.service';
 import { ImageViewerConfig } from './image-viewer.config';
@@ -19,8 +18,8 @@ import { TagComponent } from '@components/tag/tag.component';
 import { AsyncPipe } from '@angular/common';
 
 const SELECTED_INDEX_VISIBILITY_TIME = 2000;
-const MOUSE_MOVE_TROTTLE_TIME = 16;
-const MIN_PIXELS_PER_SECONDS_FOR_SWITCH = 100;
+const MOUSE_MOVE_THROTTLE_TIME = 16;
+const MIN_PIXELS_PER_SECONDS_FOR_SWITCH = 50;
 const MIN_COORDINATE_DELTA_FOR_SWITCH = 100;
 
 @Component({
@@ -154,7 +153,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
         );
 
         const move$ = touchMove$.pipe(
-            throttleTime(MOUSE_MOVE_TROTTLE_TIME),
+            throttleTime(MOUSE_MOVE_THROTTLE_TIME),
             tap((e) => this._drag(e.touches[0].pageX, e.touches[0].pageY)),
         );
 
@@ -164,7 +163,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
         this._subscriptions.add(
             mouseMove$.pipe(
-                throttleTime(MOUSE_MOVE_TROTTLE_TIME),
+                throttleTime(MOUSE_MOVE_THROTTLE_TIME),
                 tap(e => {
                     if (this._isDragging) {
                         e.preventDefault();
