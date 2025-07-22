@@ -94,6 +94,7 @@ export const JOB_EXPERIENCE: IJobExperience[] = [
                     'PrimeNG',
                     'BEM',
                     'Storybook',
+                    'WebSocket'
                 ],
                 achievements: [
                     'Lead frontend development for multiple projects, optimizing performance and workflows',
