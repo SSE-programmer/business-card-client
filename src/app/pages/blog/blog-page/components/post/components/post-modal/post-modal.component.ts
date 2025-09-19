@@ -39,7 +39,7 @@ export class PostModalComponent {
         this.dynamicModalService.closeModal(this.dynamicModalConfig.modalName);
     }
 
-    public openImageViewer($event: IMediaEvent<MouseEvent>) {
+    public openImageViewer($event: IMediaEvent<Event>) {
         this.imageViewerService.open({
             media: $event.media,
             selectedMediaIndex: $event.index,

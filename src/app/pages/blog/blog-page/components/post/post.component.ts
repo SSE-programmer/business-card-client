@@ -47,7 +47,7 @@ export class PostComponent {
         });
     }
 
-    public openImageViewer($event: IMediaEvent<MouseEvent>) {
+    public openImageViewer($event: IMediaEvent<Event>) {
         this.imageViewerService.open({
             media: $event.media,
             selectedMediaIndex: $event.index,
