@@ -18,6 +18,7 @@
 
         @if (media && media.length) {
             <bc-media-grid
+                class="media-grid bc-self-center"
                 [media]="media"
                 (mediaClick)="openImageViewer($event)"
             ></bc-media-grid>
