@@ -25,6 +25,7 @@ export const SKILLS_LIST: ISkill[] = [
     { name: 'Grunt', level: 2 },
     { name: 'Webpack', level: 2 },
     { name: 'Vite', level: 2 },
+    { name: 'PostgreSQL', level: 2 },
     { name: 'NX', level: 1 },
     { name: 'Zod', level: 1 },
     { name: 'Bun', level: 1 },
