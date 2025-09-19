@@ -1,0 +1,22 @@
+<div class="skills-container bc-flex bc-gap-8-4 bc-items-center bc-justify-center bc-flex-wrap">
+    @for (skill of skillsList; track skill.name) {
+        <bc-tag class="skill bc-self-stretch">
+            <div class="bc-flex bc-flex-col bc-gap-4 bc-items-center bc-justify-center bc-font-patua-one">
+                {{ skill.name }}
+
+                @if (skill.level) {
+                    <bc-level-indicator [level]="skill.level"></bc-level-indicator>
+                }
+            </div>
+        </bc-tag>
+    }
+</div>
+
+<bc-tag
+    class="skill magic-button bc-self-center bc-cursor-pointer"
+    tabindex="0"
+>
+    <div class="bc-flex bc-flex-col bc-gap-4 bc-items-center bc-justify-center bc-font-patua-one">
+        PUSH ME!!!
+    </div>
+</bc-tag>
