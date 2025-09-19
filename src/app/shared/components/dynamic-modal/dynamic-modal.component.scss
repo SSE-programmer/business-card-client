@@ -25,7 +25,7 @@
         width: 100%;
         max-width: min(calc(100% - 20px), var(--bc-page-container-max-width));
         height: auto;
-        max-height: min(95%, 700px);
+        max-height: 95%;
         background-color: var(--bc-bg-modals-color);
         border: 3px solid var(--bc-border-default-color);
         border-radius: var(--bc-border-radius-16);
