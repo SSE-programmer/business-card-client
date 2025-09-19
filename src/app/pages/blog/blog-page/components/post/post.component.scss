@@ -2,6 +2,10 @@
     display: flex;
     width: 100%;
 
+    .media-grid {
+        max-width: 600px;
+    }
+
     .statistic-icon {
         width: 30px;
         min-width: 30px;

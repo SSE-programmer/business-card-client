@@ -1,15 +1,16 @@
 @let post = postSignal();
 
-<div class="post bc-flex bc-flex-col bc-gap-24">
+<div class="post bc-flex bc-flex-col bc-gap-24 bc-flex-1">
     <div class="bc-flex bc-gap-4 bc-items-center">
         <span class="bc-font-patua-one bc-text-20">{{ post.date | date: 'dd MMM yyyy - HH:mm' | uppercase }}</span>
     </div>
 
-    <div class="post bc-flex bc-flex-col bc-gap-12">
+    <div class="bc-flex bc-flex-col bc-gap-12">
         @let media = post.media;
 
         @if (media && media.length) {
             <bc-media-grid
+                class="media-grid bc-self-center"
                 [media]="media"
                 (mediaClick)="openImageViewer($event)"
             ></bc-media-grid>
