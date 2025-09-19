@@ -1,6 +1,13 @@
-<div class="skills-container bc-flex bc-gap-8-4 bc-items-center bc-justify-center bc-flex-wrap">
+<div
+    class="skills-container bc-flex bc-gap-8-4 bc-items-center bc-justify-center bc-flex-wrap"
+    [class.sphere]="isSphere()"
+    #skillsContainer
+>
     @for (skill of skillsList; track skill.name) {
-        <bc-tag class="skill bc-self-stretch">
+        <bc-tag
+            class="skill bc-self-stretch"
+            #skill
+        >
             <div class="bc-flex bc-flex-col bc-gap-4 bc-items-center bc-justify-center bc-font-patua-one">
                 {{ skill.name }}
 
@@ -15,6 +22,8 @@
 <bc-tag
     class="skill magic-button bc-self-center bc-cursor-pointer"
     tabindex="0"
+    (click)="toggleSphere()"
+    (keydown.enter)="toggleSphere()"
 >
     <div class="bc-flex bc-flex-col bc-gap-4 bc-items-center bc-justify-center bc-font-patua-one">
         PUSH ME!!!

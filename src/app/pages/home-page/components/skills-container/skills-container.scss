@@ -7,12 +7,37 @@
 
     .skills-container {
         position: relative;
+        transition: width var(--bc-transition-duration-default), height var(--bc-transition-duration-default);
+
+        .skill {
+            transition: background-color var(--bc-transition-duration-default);
+
+            &:hover {
+                background-color: var(--bc-bg-skill-tags-color);
+            }
+        }
+
+        &.sphere {
+            aspect-ratio: 1 / 1;
+
+            .skill {
+                cursor: pointer;
+            }
+        }
     }
 
     .magic-button {
         background: var(--bc-bg-skill-tags-color);
         animation: magic-combined 2s infinite;
+        transition: all 2s ease;
         will-change: transform;
+
+        @media (hover: hover) {
+            &:hover {
+                animation: none;
+                transform: rotate(0) scale(1.05);
+            }
+        }
     }
 
     @keyframes magic-combined {
