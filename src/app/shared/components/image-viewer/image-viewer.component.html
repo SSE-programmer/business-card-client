@@ -1,4 +1,8 @@
-<aside class="image-viewer-wrapper">
+<aside
+    class="image-viewer-wrapper"
+    cdkTrapFocus
+    [cdkTrapFocusAutoCapture]="true"
+>
     @if (selectedMediaIndex > 0) {
         <div
             class="switch-button left"

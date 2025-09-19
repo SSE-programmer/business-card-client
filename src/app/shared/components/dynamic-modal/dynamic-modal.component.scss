@@ -43,13 +43,13 @@
         &__body {
             display: flex;
             flex-direction: column;
-            padding: var(--bc-padding-24) var(--bc-padding-24);
+            padding: var(--bc-padding-12) var(--bc-padding-24);
             height: auto;
             max-height: 100%;
             overflow: hidden;
 
             @media (max-width: 1040px) {
-                padding: var(--bc-padding-24) var(--bc-padding-16);
+                padding: var(--bc-padding-12) var(--bc-padding-12);
             }
         }
 

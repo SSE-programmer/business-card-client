@@ -19,12 +19,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DynamicModalService } from './dynamic-modal.service';
 import { DynamicModalConfig } from './dynamic-modal.config';
 import { ImageViewerService } from '@components/image-viewer/image-viewer.service';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'bc-dynamic-modal',
     standalone: true,
     imports: [
         InsertionDirective,
+        CdkTrapFocus
     ],
     templateUrl: './dynamic-modal.component.html',
     styleUrl: './dynamic-modal.component.scss',

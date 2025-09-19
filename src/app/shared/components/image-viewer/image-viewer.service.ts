@@ -38,6 +38,10 @@ export class ImageViewerService {
             throw new Error('ViewContainerRef must be defined');
         }
 
+        if (this.viewerComponentRef) {
+            this._removeModalComponentFromBody(this.viewerComponentRef);
+        }
+
         const map = new WeakMap();
         map.set(ImageViewerConfig, config);
 

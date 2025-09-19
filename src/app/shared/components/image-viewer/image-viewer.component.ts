@@ -7,7 +7,9 @@ import {
     HostListener,
     inject,
     OnDestroy,
-    OnInit, Renderer2, signal,
+    OnInit,
+    Renderer2,
+    signal,
     viewChild,
 } from '@angular/core';
 import { debounceTime, fromEvent, Subscription, tap, throttleTime } from 'rxjs';
@@ -15,19 +17,19 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ImageViewerService } from './image-viewer.service';
 import { ImageViewerConfig } from './image-viewer.config';
 import { TagComponent } from '@components/tag/tag.component';
-import { AsyncPipe } from '@angular/common';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 
 const SELECTED_INDEX_VISIBILITY_TIME = 2000;
 const MOUSE_MOVE_THROTTLE_TIME = 16;
-const MIN_PIXELS_PER_SECONDS_FOR_SWITCH = 50;
-const MIN_COORDINATE_DELTA_FOR_SWITCH = 100;
+const MIN_PIXELS_PER_SECONDS_FOR_SWITCH = 40;
+const MIN_COORDINATE_DELTA_FOR_SWITCH = 50;
 
 @Component({
     selector: 'bc-image-viewer',
     standalone: true,
     imports: [
         TagComponent,
-        AsyncPipe,
+        CdkTrapFocus
     ],
     templateUrl: './image-viewer.component.html',
     styleUrl: './image-viewer.component.scss',
