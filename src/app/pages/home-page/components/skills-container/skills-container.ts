@@ -67,12 +67,21 @@ export class SkillsContainer implements OnDestroy {
 
         this.cleanup();
 
+        const { width, height } = container.getBoundingClientRect();
+        const size = Math.min(width, height);
+
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 1, 5000);
-        this.camera.position.z = 1500;
+        this.camera = new THREE.PerspectiveCamera(50, 1, 1, 5000); // aspect = 1
+        this.camera.position.z = 900;
 
         this.renderer = new CSS3DRenderer();
-        this.renderer.setSize(container.clientWidth, container.clientHeight);
+        this.renderer.setSize(size, size);
+
+        this.renderer.domElement.style.position = 'absolute';
+        this.renderer.domElement.style.left = '50%';
+        this.renderer.domElement.style.top = '50%';
+        this.renderer.domElement.style.transform = 'translate(-50%, -50%)';
+
         container.appendChild(this.renderer.domElement);
 
         this.createDomSphere();
@@ -91,32 +100,34 @@ export class SkillsContainer implements OnDestroy {
 
         const radius = 300;
 
-        Array.from(sourceElements).forEach((element: HTMLElement, index: number) => {
-            element.classList.add('dom-element');
+        Array
+            .from(sourceElements)
+            .forEach((element: HTMLElement, index: number) => {
+                element.classList.add('dom-element');
 
-            // Создаем CSS3D объект
-            const object = new CSS3DObject(element);
+                // Создаем CSS3D объект
+                const object = new CSS3DObject(element);
 
-            // Располагаем на сфере (фибоначчиево распределение)
-            const phi = Math.acos(-1 + (2 * index) / sourceElements.length);
-            const theta = Math.sqrt(sourceElements.length * Math.PI) * phi;
+                // Располагаем на сфере (фибоначчиево распределение)
+                const phi = Math.acos(-1 + (2 * index) / sourceElements.length);
+                const theta = Math.sqrt(sourceElements.length * Math.PI) * phi;
 
-            object.position.set(
-                radius * Math.sin(phi) * Math.cos(theta),
-                radius * Math.sin(phi) * Math.sin(theta),
-                radius * Math.cos(phi)
-            );
+                object.position.set(
+                    radius * Math.sin(phi) * Math.cos(theta),
+                    radius * Math.sin(phi) * Math.sin(theta),
+                    radius * Math.cos(phi)
+                );
 
-            object.userData = {
-                originalPosition: object.position.clone(),
-                index,
-                element: element
-            };
+                object.userData = {
+                    originalPosition: object.position.clone(),
+                    index,
+                    element: element
+                };
 
-            // tslint:disable-next-line:no-non-null-assertion
-            this.scene!.add(object);
-            this.objects.push(object);
-        });
+                // tslint:disable-next-line:no-non-null-assertion
+                this.scene!.add(object);
+                this.objects.push(object);
+            });
     }
 
     private animate = () => {
@@ -155,9 +166,18 @@ export class SkillsContainer implements OnDestroy {
     }
 
     private updateElementsStyle() {
-        if (!this.camera) {
+        if (!this.camera || !this.scene) {
             return;
         }
+
+        const center = new THREE.Vector3(0, 0, 0);
+
+        // Получаем мировую позицию камеры (уже учитывает вращение сцены)
+        const cameraPosition = this.camera.getWorldPosition(new THREE.Vector3());
+
+        // Создаем временный объект для мировых координат
+        const worldPosition = new THREE.Vector3();
+        const worldNormal = new THREE.Vector3();
 
         this.objects.forEach(object => {
             const element = object.userData['element'] as HTMLElement;
@@ -166,37 +186,45 @@ export class SkillsContainer implements OnDestroy {
                 return;
             }
 
+            // 1. Получаем мировую позицию элемента (с учетом вращения сцены)
+            object.getWorldPosition(worldPosition);
+
+            // 2. Вычисляем нормаль от центра к элементу в мировых координатах
+            worldNormal.copy(worldPosition).sub(center).normalize();
+
+            // 3. Направление от элемента к камере в мировых координатах
+            const elementToCamera = new THREE.Vector3()
+                .subVectors(cameraPosition, worldPosition)
+                .normalize();
+
+            // 4. Косинус угла между нормалью и направлением к камере
+            const facingRatio = worldNormal.dot(elementToCamera);
+
+            // 5. Прозрачность зависит только от ориентации
+            const opacity = 0.3 + (facingRatio + 1) * 0.35;
+            const scale = 0.5 + (facingRatio + 1) * 0.25;
+
+            element.style.opacity = Math.max(0.3, Math.min(1, opacity)).toString();
+            element.style.transform = `scale(${Math.max(0.5, Math.min(1, scale))})`;
+
+            // Поворачиваем элемент лицом к камере
             // tslint:disable-next-line:no-non-null-assertion
-            const distance = object.position.distanceTo(this.camera!.position);
-            const maxDistance = 12000;
-
-            // Динамическая прозрачность и масштаб
-            const opacity = Math.max(0.3, 1 - (distance / maxDistance));
-            const scale = Math.max(0.5, 1 - (distance / maxDistance));
-
-            // Применяем стили
-            element.style.opacity = opacity.toString();
-            element.style.transform = `scale(${scale})`;
-
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            object.lookAt(this.camera.position);
+            object.lookAt(this.camera!.position);
         });
     }
+
 
     private setupEventListeners(container: HTMLElement) {
         this.mouseEventListeners = {
             mousedown: this.onMouseDown.bind(this),
             mousemove: this.onMouseMove.bind(this),
             mouseup: this.onMouseUp.bind(this),
-            wheel: this.onMouseWheel.bind(this),
             resize: this.onWindowResize.bind(this)
         };
 
         container.addEventListener('mousedown', this.mouseEventListeners['mousedown']);
         container.addEventListener('mousemove', this.mouseEventListeners['mousemove']);
         container.addEventListener('mouseup', this.mouseEventListeners['mouseup']);
-        container.addEventListener('wheel', this.mouseEventListeners['wheel']);
         window.addEventListener('resize', this.mouseEventListeners['resize']);
     }
 
@@ -222,16 +250,6 @@ export class SkillsContainer implements OnDestroy {
         this.isDragging = false;
     }
 
-    private onMouseWheel(event: WheelEvent) {
-        if (!this.camera) {
-            return;
-        }
-
-        event.preventDefault();
-        this.camera.position.z += event.deltaY * 0.5;
-        this.camera.position.z = Math.max(500, Math.min(2500, this.camera.position.z));
-    }
-
     private onWindowResize() {
         const container = this.skillsContainer()?.nativeElement;
 
@@ -239,9 +257,12 @@ export class SkillsContainer implements OnDestroy {
             return;
         }
 
-        this.camera.aspect = container.clientWidth / container.clientHeight;
+        const { width, height } = container.getBoundingClientRect();
+        const size = Math.min(width, height);
+
+        this.renderer.setSize(size, size);
+        this.camera.aspect = 1;
         this.camera.updateProjectionMatrix();
-        this.renderer.setSize(container.clientWidth, container.clientHeight);
     }
 
     private cleanup() {
