@@ -5,10 +5,9 @@ import { SKILLS_LIST } from '@pages/home-page/constants/skills-list.constant';
 import * as THREE from 'three';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 
-const MIN_ROTATION_SPEED = 0.0002;
-const INITIAL_ROTATION_SPEED = 0.002;
-
-type SpeedVector = [number, number];
+const MIN_ROTATION_SPEED = 0.0003;
+const MAX_ROTATION_SPEED = 0.0500;
+const INITIAL_ROTATION_SPEED = 0.003;
 
 @Component({
   selector: 'bc-skills-container',
@@ -26,7 +25,6 @@ export class SkillsContainer implements OnDestroy {
     private elementRef = inject(ElementRef);
 
     protected isSphere = signal(false);
-    rotationSpeedVec = signal<SpeedVector>([INITIAL_ROTATION_SPEED, INITIAL_ROTATION_SPEED]);
     inertia = signal(0.995);
 
     private scene: THREE.Scene | null = null;
@@ -37,6 +35,11 @@ export class SkillsContainer implements OnDestroy {
 
     skillsContainer = viewChild<ElementRef>('skillsContainer');
     skillElementsList = viewChildren<string, ElementRef>('skill', {read: ElementRef});
+
+    private rotationQuaternion = new THREE.Quaternion();
+    private angularVelocity = new THREE.Vector2(INITIAL_ROTATION_SPEED, INITIAL_ROTATION_SPEED);
+    private dragQuaternion = new THREE.Quaternion();
+    private tempQuaternion = new THREE.Quaternion();
 
     private isDragging = false;
     private previousMousePosition = { x: 0, y: 0 };
@@ -137,12 +140,8 @@ export class SkillsContainer implements OnDestroy {
 
         this.animationId = requestAnimationFrame(this.animate);
 
-        // Вращение с инерцией
-        const [rotationSpeedX, rotationSpeedY] = this.rotationSpeedVec();
-
-        this.scene.rotation.x += rotationSpeedX;
-        this.scene.rotation.y += rotationSpeedY;
-        this._updateRotationSpeed(rotationSpeedX * this.inertia(), rotationSpeedY * this.inertia());
+        // Всегда применяем вращение на основе angularVelocity
+        this.applyRotation();
 
         // Обновление прозрачности и масштаба
         this.updateElementsStyle();
@@ -150,19 +149,35 @@ export class SkillsContainer implements OnDestroy {
         this.renderer.render(this.scene, this.camera);
     }
 
-    private _updateRotationSpeed(x: number, y: number) {
-        this.rotationSpeedVec.set([
-            this._enforceMinAbs(x, MIN_ROTATION_SPEED),
-            this._enforceMinAbs(y, MIN_ROTATION_SPEED),
-        ]);
+    private applyRotation() {
+        // Применяем вращение через кватернионы
+        const quaternionX = new THREE.Quaternion();
+        const quaternionY = new THREE.Quaternion();
+
+        quaternionY.setFromAxisAngle(new THREE.Vector3(0, 1, 0), this.angularVelocity.y);
+        quaternionX.setFromAxisAngle(new THREE.Vector3(1, 0, 0), this.angularVelocity.x);
+
+        this.tempQuaternion.copy(quaternionY).multiply(quaternionX);
+        this.rotationQuaternion.premultiply(this.tempQuaternion);
+        // tslint:disable-next-line:no-non-null-assertion
+        this.scene!.setRotationFromQuaternion(this.rotationQuaternion);
+
+        // Замедление только когда не dragging
+        if (!this.isDragging) {
+            this.angularVelocity.multiplyScalar(this.inertia());
+            this._updateRotationSpeed(this.angularVelocity.x, this.angularVelocity.y);
+        }
     }
 
-    private _enforceMinAbs(value: number, MIN: number) {
-        if (Math.abs(value) < MIN) {
-            return Math.sign(value) === -1 ? -MIN : MIN;
-        }
+    private _updateRotationSpeed(x: number, y: number) {
+        this.angularVelocity.set(
+            this._enforceMinMaxAbs(x, MIN_ROTATION_SPEED, MAX_ROTATION_SPEED),
+            this._enforceMinMaxAbs(y, MIN_ROTATION_SPEED, MAX_ROTATION_SPEED)
+        );
+    }
 
-        return value;
+    private _enforceMinMaxAbs(value: number, MIN: number, MAX: number) {
+        return Math.min(Math.max(MIN, Math.abs(value)), MAX) * (Math.sign(value) || 1);
     }
 
     private updateElementsStyle() {
@@ -241,7 +256,21 @@ export class SkillsContainer implements OnDestroy {
         const deltaX = event.clientX - this.previousMousePosition.x;
         const deltaY = event.clientY - this.previousMousePosition.y;
 
-        this._updateRotationSpeed(deltaY * 0.0005, deltaX * 0.0005);
+        // Непосредственно применяем вращение во время drag
+        const sensitivity = 0.001;
+
+        const quaternionX = new THREE.Quaternion();
+        const quaternionY = new THREE.Quaternion();
+
+        quaternionY.setFromAxisAngle(new THREE.Vector3(0, 1, 0), deltaX * sensitivity);
+        quaternionX.setFromAxisAngle(new THREE.Vector3(1, 0, 0), deltaY * sensitivity);
+
+        this.dragQuaternion.copy(quaternionY).multiply(quaternionX);
+        this.rotationQuaternion.premultiply(this.dragQuaternion);
+        this.scene.setRotationFromQuaternion(this.rotationQuaternion);
+
+        // Сохраняем скорость для инерции после отпускания
+        this._updateRotationSpeed(deltaY * sensitivity, deltaX * sensitivity);
 
         this.previousMousePosition = { x: event.clientX, y: event.clientY };
     }
