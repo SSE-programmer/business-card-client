@@ -1,0 +1,19 @@
+<div
+    class="skills-container bc-flex bc-gap-8-4 bc-items-center bc-justify-center bc-flex-wrap"
+    #skillsContainer
+>
+    @for (skill of skillsList; track skill.name) {
+        <bc-tag
+            class="skill bc-self-stretch"
+            #skill
+        >
+            <div class="bc-flex bc-flex-col bc-gap-4 bc-items-center bc-justify-center bc-font-patua-one">
+                {{ skill.name }}
+
+                @if (skill.level) {
+                    <bc-level-indicator [level]="skill.level"></bc-level-indicator>
+                }
+            </div>
+        </bc-tag>
+    }
+</div>

@@ -1,13 +1,11 @@
-import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgComponentOutlet, NgOptimizedImage } from '@angular/common';
 import { CardComponent } from '@components/card/card.component';
 import { CareerTimelineComponent } from '@components/career-timeline/career-timeline.component';
 import { CONTACTS_LIST } from './constants/contacts-list.constant';
 import { JOB_EXPERIENCE } from './constants/job-experience.constant';
-import { SKILLS_LIST } from './constants/skills-list.constant';
 import { OnloadFadeInDirective } from '@directives/onload-fade-in/onload-fade-in.directive';
-import { LevelIndicatorComponent } from '@components/level-indicator/level-indicator.component';
-import { TagComponent } from '@components/tag/tag.component';
+import { SkillsContainer } from '@pages/home-page/components/skills-container/skills-container';
 
 @Component({
     selector: 'bc-home-page',
@@ -19,13 +17,11 @@ import { TagComponent } from '@components/tag/tag.component';
         NgComponentOutlet,
         CareerTimelineComponent,
         OnloadFadeInDirective,
-        LevelIndicatorComponent,
-        TagComponent,
+        SkillsContainer,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePageComponent {
     public contactsList = CONTACTS_LIST;
     public jobExperience = JOB_EXPERIENCE;
-    public skillsList = SKILLS_LIST;
 }

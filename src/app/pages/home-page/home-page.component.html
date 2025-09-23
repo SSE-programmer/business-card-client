@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <div class="bc-flex bc-flex-col bc-gap-12 bc-flex-wrap bc-items-center bc-max-w-full">
+    <div class="bc-flex bc-flex-col bc-gap-12 bc-flex-wrap bc-items-center bc-w-full bc-max-w-full">
         <bc-card
             header="💼 Career timeline"
             data-aos="fade-right"
@@ -84,19 +84,7 @@
             data-aos="fade-left"
         >
             <ng-template #contentTemplate>
-                <div class="bc-flex bc-gap-8-4 bc-items-center bc-justify-center bc-flex-wrap">
-                    @for (skill of skillsList; track skill.name) {
-                        <bc-tag class="bc-self-stretch">
-                            <div class="bc-flex bc-flex-col bc-gap-4 bc-items-center bc-justify-center bc-font-patua-one">
-                                {{ skill.name }}
-
-                                @if (skill.level) {
-                                    <bc-level-indicator [level]="skill.level"></bc-level-indicator>
-                                }
-                            </div>
-                        </bc-tag>
-                    }
-                </div>
+                <bc-skills-container/>
             </ng-template>
         </bc-card>
 
