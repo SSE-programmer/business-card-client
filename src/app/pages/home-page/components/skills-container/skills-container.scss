@@ -8,20 +8,17 @@
     .skills-container {
         position: relative;
         transition: width var(--bc-transition-duration-default), height var(--bc-transition-duration-default);
+        align-self: center;
+        width: 100%;
+        max-width: 500px;
+        aspect-ratio: 1 / 1;
 
         .skill {
             transition: background-color var(--bc-transition-duration-default);
+            cursor: pointer;
 
             &:hover {
                 background-color: var(--bc-bg-skill-tags-color);
-            }
-        }
-
-        &.sphere {
-            aspect-ratio: 1 / 1;
-
-            .skill {
-                cursor: pointer;
             }
         }
     }

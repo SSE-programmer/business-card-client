@@ -37,6 +37,7 @@ export const SKILLS_LIST: ISkill[] = [
     { name: 'CI/CD', level: 1 },
     { name: 'Github Actions', level: 1 },
     { name: 'ESLint', level: 1 },
+    { name: 'Three.js', level: 1 },
     { name: 'Storybook' },
     { name: 'Jira' },
     { name: 'Yougile' },

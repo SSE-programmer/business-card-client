@@ -1,332 +1,320 @@
-import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, OnDestroy, signal, viewChild, viewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, viewChild, viewChildren } from '@angular/core';
 import { LevelIndicatorComponent } from '@components/level-indicator/level-indicator.component';
 import { TagComponent } from '@components/tag/tag.component';
 import { SKILLS_LIST } from '@pages/home-page/constants/skills-list.constant';
 import * as THREE from 'three';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 
-const MIN_ROTATION_SPEED = 0.0003;
-const MAX_ROTATION_SPEED = 0.0500;
-const INITIAL_ROTATION_SPEED = 0.003;
+const CONFIG = {
+    MIN_ROTATION_SPEED: 0.0003,
+    MAX_ROTATION_SPEED: 0.0500,
+    INITIAL_ROTATION_SPEED: 0.003,
+    MAX_CONTAINER_WIDTH: 500,
+    INERTIA: 0.995,
+    CAMERA_Z: 700,
+    SPHERE_RADIUS: 250,
+    OPACITY_RANGE: { min: 0.3, max: 1 },
+    SCALE_RANGE: { min: 0.5, max: 1 }
+};
 
 @Component({
-  selector: 'bc-skills-container',
-  imports: [
-      LevelIndicatorComponent,
-      TagComponent
-  ],
-  templateUrl: './skills-container.html',
-  styleUrl: './skills-container.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'bc-skills-container',
+    imports: [LevelIndicatorComponent, TagComponent],
+    templateUrl: './skills-container.html',
+    styleUrl: './skills-container.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkillsContainer implements OnDestroy {
+export class SkillsContainer implements AfterViewInit {
     protected readonly skillsList = SKILLS_LIST;
 
-    private elementRef = inject(ElementRef);
+    private _destroyRef = inject(DestroyRef);
+    private _skillsContainer = viewChild.required<ElementRef>('skillsContainer');
+    private _skillElementsList = viewChildren<string, ElementRef>('skill', { read: ElementRef });
 
-    protected isSphere = signal(false);
-    inertia = signal(0.995);
+    private _scene: THREE.Scene | null = null;
+    private _camera: THREE.PerspectiveCamera | null = null;
+    private _renderer: CSS3DRenderer | null = null;
+    private _objects: CSS3DObject[] = [];
 
-    private scene: THREE.Scene | null = null;
-    private camera: THREE.PerspectiveCamera | null = null;
-    private renderer: CSS3DRenderer | null = null;
-    private objects: CSS3DObject[] = [];
-    private animationId: number | null = null;
+    private _rotationQuaternion = new THREE.Quaternion();
+    private _angularVelocity = new THREE.Vector2(CONFIG.INITIAL_ROTATION_SPEED, CONFIG.INITIAL_ROTATION_SPEED);
+    private _dragQuaternion = new THREE.Quaternion();
 
-    skillsContainer = viewChild<ElementRef>('skillsContainer');
-    skillElementsList = viewChildren<string, ElementRef>('skill', {read: ElementRef});
+    private _isDragging = false;
+    private _previousPosition = { x: 0, y: 0 };
+    private _animationId: number | null = null;
 
-    private rotationQuaternion = new THREE.Quaternion();
-    private angularVelocity = new THREE.Vector2(INITIAL_ROTATION_SPEED, INITIAL_ROTATION_SPEED);
-    private dragQuaternion = new THREE.Quaternion();
-    private tempQuaternion = new THREE.Quaternion();
+    private _reusable = {
+        center: new THREE.Vector3(0, 0, 0),
+        cameraPosition: new THREE.Vector3(),
+        worldPosition: new THREE.Vector3(),
+        worldNormal: new THREE.Vector3(),
+        elementToCamera: new THREE.Vector3()
+    };
 
-    private isDragging = false;
-    private previousMousePosition = { x: 0, y: 0 };
-    private mouseEventListeners: { [key: string]: (event: any) => void } = {};
+    public ngAfterViewInit(): void {
+        this._initScene();
+    }
 
-    constructor() {
-        effect((onCleanup) => {
-            if (this.isSphere()) {
-                setTimeout(() => this._initScene(), 0);
+    private _initScene(): void {
+        const container = this._skillsContainer().nativeElement;
+        const { width, height } = container.getBoundingClientRect();
+        const size = Math.min(width, height, CONFIG.MAX_CONTAINER_WIDTH);
 
-                onCleanup(() => {
-                    this.cleanup();
-                });
-            }
+        this._setupThreeJS(container, size);
+        this._createDomSphere();
+        this._setupEventListeners(container);
+        this._animate();
+
+        this._destroyRef.onDestroy(() => this._cleanup());
+    }
+
+    private _setupThreeJS(container: HTMLElement, size: number): void {
+        this._scene = new THREE.Scene();
+        this._camera = new THREE.PerspectiveCamera(50, 1, 1, 5000);
+        this._camera.position.z = CONFIG.CAMERA_Z;
+
+        this._renderer = new CSS3DRenderer();
+        this._renderer.setSize(size, size);
+
+        const domElement = this._renderer.domElement;
+
+        domElement.style.cssText = `
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        `;
+
+        container.appendChild(domElement);
+    }
+
+    private _createDomSphere(): void {
+        if (!this._scene) {
+            return;
+        }
+
+        const elements = this._skillElementsList().map(el => el.nativeElement);
+
+        elements.forEach((element: HTMLElement, index: number) => {
+            element.classList.add('dom-element');
+
+            const object = new CSS3DObject(element);
+
+            this._setSpherePosition(object, index, elements.length);
+
+            object.userData = { element, index };
+            // tslint:disable-next-line:no-non-null-assertion
+            this._scene!.add(object);
+            this._objects.push(object);
         });
     }
 
-    protected toggleSphere() {
-        this.isSphere.set(!this.isSphere());
-    }
+    private _setSpherePosition(object: CSS3DObject, index: number, total: number): void {
+        const phi = Math.acos(-1 + (2 * index) / total);
+        const theta = Math.sqrt(total * Math.PI) * phi;
+        const radius = CONFIG.SPHERE_RADIUS;
 
-    private _initScene() {
-        const container = this.skillsContainer()?.nativeElement;
-
-        if (!container) {
-            return;
-        }
-
-        this.cleanup();
-
-        const { width, height } = container.getBoundingClientRect();
-        const size = Math.min(width, height);
-
-        this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(50, 1, 1, 5000); // aspect = 1
-        this.camera.position.z = 900;
-
-        this.renderer = new CSS3DRenderer();
-        this.renderer.setSize(size, size);
-
-        this.renderer.domElement.style.position = 'absolute';
-        this.renderer.domElement.style.left = '50%';
-        this.renderer.domElement.style.top = '50%';
-        this.renderer.domElement.style.transform = 'translate(-50%, -50%)';
-
-        container.appendChild(this.renderer.domElement);
-
-        this.createDomSphere();
-        this.setupEventListeners(container);
-        this.animate();
-    }
-
-    private createDomSphere() {
-        if (!this.scene) {
-            return;
-        }
-
-        const sourceElements = Array
-            .from(this.skillElementsList())
-            .map(elementRef => elementRef.nativeElement);
-
-        const radius = 300;
-
-        Array
-            .from(sourceElements)
-            .forEach((element: HTMLElement, index: number) => {
-                element.classList.add('dom-element');
-
-                // Создаем CSS3D объект
-                const object = new CSS3DObject(element);
-
-                // Располагаем на сфере (фибоначчиево распределение)
-                const phi = Math.acos(-1 + (2 * index) / sourceElements.length);
-                const theta = Math.sqrt(sourceElements.length * Math.PI) * phi;
-
-                object.position.set(
-                    radius * Math.sin(phi) * Math.cos(theta),
-                    radius * Math.sin(phi) * Math.sin(theta),
-                    radius * Math.cos(phi)
-                );
-
-                object.userData = {
-                    originalPosition: object.position.clone(),
-                    index,
-                    element: element
-                };
-
-                // tslint:disable-next-line:no-non-null-assertion
-                this.scene!.add(object);
-                this.objects.push(object);
-            });
-    }
-
-    private animate = () => {
-        if (!this.scene || !this.camera || !this.renderer) {
-            return;
-        }
-
-        this.animationId = requestAnimationFrame(this.animate);
-
-        // Всегда применяем вращение на основе angularVelocity
-        this.applyRotation();
-
-        // Обновление прозрачности и масштаба
-        this.updateElementsStyle();
-
-        this.renderer.render(this.scene, this.camera);
-    }
-
-    private applyRotation() {
-        // Применяем вращение через кватернионы
-        const quaternionX = new THREE.Quaternion();
-        const quaternionY = new THREE.Quaternion();
-
-        quaternionY.setFromAxisAngle(new THREE.Vector3(0, 1, 0), this.angularVelocity.y);
-        quaternionX.setFromAxisAngle(new THREE.Vector3(1, 0, 0), this.angularVelocity.x);
-
-        this.tempQuaternion.copy(quaternionY).multiply(quaternionX);
-        this.rotationQuaternion.premultiply(this.tempQuaternion);
-        // tslint:disable-next-line:no-non-null-assertion
-        this.scene!.setRotationFromQuaternion(this.rotationQuaternion);
-
-        // Замедление только когда не dragging
-        if (!this.isDragging) {
-            this.angularVelocity.multiplyScalar(this.inertia());
-            this._updateRotationSpeed(this.angularVelocity.x, this.angularVelocity.y);
-        }
-    }
-
-    private _updateRotationSpeed(x: number, y: number) {
-        this.angularVelocity.set(
-            this._enforceMinMaxAbs(x, MIN_ROTATION_SPEED, MAX_ROTATION_SPEED),
-            this._enforceMinMaxAbs(y, MIN_ROTATION_SPEED, MAX_ROTATION_SPEED)
+        object.position.set(
+            radius * Math.sin(phi) * Math.cos(theta),
+            radius * Math.sin(phi) * Math.sin(theta),
+            radius * Math.cos(phi)
         );
     }
 
-    private _enforceMinMaxAbs(value: number, MIN: number, MAX: number) {
-        return Math.min(Math.max(MIN, Math.abs(value)), MAX) * (Math.sign(value) || 1);
-    }
-
-    private updateElementsStyle() {
-        if (!this.camera || !this.scene) {
+    private _animate = (): void => {
+        if (!this._scene || !this._camera || !this._renderer) {
             return;
         }
 
-        const center = new THREE.Vector3(0, 0, 0);
+        this._animationId = requestAnimationFrame(this._animate);
+        this._applyRotation();
+        this._updateElementsStyle();
+        this._renderer.render(this._scene, this._camera);
+    }
 
-        // Получаем мировую позицию камеры (уже учитывает вращение сцены)
-        const cameraPosition = this.camera.getWorldPosition(new THREE.Vector3());
+    private _applyRotation(): void {
+        if (!this._scene) {
+            return;
+        }
 
-        // Создаем временный объект для мировых координат
-        const worldPosition = new THREE.Vector3();
-        const worldNormal = new THREE.Vector3();
+        const delta = this._calculateRotationDelta();
 
-        this.objects.forEach(object => {
+        this._rotationQuaternion.premultiply(delta);
+        this._scene.setRotationFromQuaternion(this._rotationQuaternion);
+
+        if (!this._isDragging) {
+            this._angularVelocity.multiplyScalar(CONFIG.INERTIA);
+            this._clampAngularVelocity();
+        }
+    }
+
+    private _calculateRotationDelta(): THREE.Quaternion {
+        const quaternionX = new THREE.Quaternion();
+        const quaternionY = new THREE.Quaternion();
+
+        quaternionY.setFromAxisAngle(new THREE.Vector3(0, 1, 0), this._angularVelocity.y);
+        quaternionX.setFromAxisAngle(new THREE.Vector3(1, 0, 0), this._angularVelocity.x);
+
+        return quaternionY.multiply(quaternionX);
+    }
+
+    private _clampAngularVelocity(): void {
+        this._angularVelocity.set(
+            this._clampValue(this._angularVelocity.x, CONFIG.MIN_ROTATION_SPEED, CONFIG.MAX_ROTATION_SPEED),
+            this._clampValue(this._angularVelocity.y, CONFIG.MIN_ROTATION_SPEED, CONFIG.MAX_ROTATION_SPEED)
+        );
+    }
+
+    private _clampValue(value: number, min: number, max: number): number {
+        return Math.min(Math.max(min, Math.abs(value)), max) * (Math.sign(value) || 1);
+    }
+
+    private _updateElementsStyle(): void {
+        if (!this._camera) {
+            return;
+        }
+
+        const { center, cameraPosition, worldPosition, worldNormal, elementToCamera } = this._reusable;
+
+        this._camera.getWorldPosition(cameraPosition);
+
+        this._objects.forEach(object => {
             const element = object.userData['element'] as HTMLElement;
 
             if (!element) {
                 return;
             }
 
-            // 1. Получаем мировую позицию элемента (с учетом вращения сцены)
             object.getWorldPosition(worldPosition);
-
-            // 2. Вычисляем нормаль от центра к элементу в мировых координатах
             worldNormal.copy(worldPosition).sub(center).normalize();
+            elementToCamera.subVectors(cameraPosition, worldPosition).normalize();
 
-            // 3. Направление от элемента к камере в мировых координатах
-            const elementToCamera = new THREE.Vector3()
-                .subVectors(cameraPosition, worldPosition)
-                .normalize();
-
-            // 4. Косинус угла между нормалью и направлением к камере
             const facingRatio = worldNormal.dot(elementToCamera);
+            const opacity = this._calculateOpacity(facingRatio);
+            const scale = this._calculateScale(facingRatio);
 
-            // 5. Прозрачность зависит только от ориентации
-            const opacity = 0.3 + (facingRatio + 1) * 0.35;
-            const scale = 0.5 + (facingRatio + 1) * 0.25;
-
-            element.style.opacity = Math.max(0.3, Math.min(1, opacity)).toString();
-            element.style.transform = `scale(${Math.max(0.5, Math.min(1, scale))})`;
-
-            // Поворачиваем элемент лицом к камере
+            element.style.opacity = opacity.toString();
+            element.style.transform = `scale(${scale})`;
             // tslint:disable-next-line:no-non-null-assertion
-            object.lookAt(this.camera!.position);
+            object.lookAt(this._camera!.position);
         });
     }
 
+    private _calculateOpacity(facingRatio: number): number {
+        const range = CONFIG.OPACITY_RANGE.max - CONFIG.OPACITY_RANGE.min;
 
-    private setupEventListeners(container: HTMLElement) {
-        this.mouseEventListeners = {
-            mousedown: this.onMouseDown.bind(this),
-            mousemove: this.onMouseMove.bind(this),
-            mouseup: this.onMouseUp.bind(this),
-            resize: this.onWindowResize.bind(this)
+        return CONFIG.OPACITY_RANGE.min + (facingRatio + 1) * 0.5 * range;
+    }
+
+    private _calculateScale(facingRatio: number): number {
+        const range = CONFIG.SCALE_RANGE.max - CONFIG.SCALE_RANGE.min;
+
+        return CONFIG.SCALE_RANGE.min + (facingRatio + 1) * 0.5 * range;
+    }
+
+    private _setupEventListeners(container: HTMLElement): void {
+        const events = {
+            mousedown: this._onDragStart.bind(this),
+            mousemove: this._onDragMove.bind(this),
+            mouseup: this._onDragEnd.bind(this),
+            mouseleave: this._onDragEnd.bind(this),
+            touchstart: this._onTouchStart.bind(this),
+            touchmove: this._onDragMove.bind(this),
+            touchend: this._onDragEnd.bind(this),
+            touchcancel: this._onDragEnd.bind(this),
+            resize: this._onResize.bind(this)
         };
 
-        container.addEventListener('mousedown', this.mouseEventListeners['mousedown']);
-        container.addEventListener('mousemove', this.mouseEventListeners['mousemove']);
-        container.addEventListener('mouseup', this.mouseEventListeners['mouseup']);
-        window.addEventListener('resize', this.mouseEventListeners['resize']);
+        Object.entries(events).forEach(([event, handler]) => {
+            const options = event.startsWith('touch') ? { passive: false } : undefined;
+            const target = event === 'resize' ? window : container;
+            target.addEventListener(event, handler as EventListener, options);
+        });
     }
 
-    private onMouseDown(event: MouseEvent) {
-        this.isDragging = true;
-        this.previousMousePosition = { x: event.clientX, y: event.clientY };
+    private _onDragStart(event: MouseEvent | TouchEvent): void {
+        event.preventDefault();
+        this._isDragging = true;
+        this._previousPosition = this._getEventPosition(event);
     }
 
-    private onMouseMove(event: MouseEvent) {
-        if (!this.isDragging || !this.scene) {
+    private _onDragMove(event: MouseEvent | TouchEvent): void {
+        if (!this._isDragging || !this._scene) {
             return;
         }
 
-        const deltaX = event.clientX - this.previousMousePosition.x;
-        const deltaY = event.clientY - this.previousMousePosition.y;
+        const position = this._getEventPosition(event);
+        const deltaX = position.x - this._previousPosition.x;
+        const deltaY = position.y - this._previousPosition.y;
 
-        // Непосредственно применяем вращение во время drag
-        const sensitivity = 0.001;
-
-        const quaternionX = new THREE.Quaternion();
-        const quaternionY = new THREE.Quaternion();
-
-        quaternionY.setFromAxisAngle(new THREE.Vector3(0, 1, 0), deltaX * sensitivity);
-        quaternionX.setFromAxisAngle(new THREE.Vector3(1, 0, 0), deltaY * sensitivity);
-
-        this.dragQuaternion.copy(quaternionY).multiply(quaternionX);
-        this.rotationQuaternion.premultiply(this.dragQuaternion);
-        this.scene.setRotationFromQuaternion(this.rotationQuaternion);
-
-        // Сохраняем скорость для инерции после отпускания
-        this._updateRotationSpeed(deltaY * sensitivity, deltaX * sensitivity);
-
-        this.previousMousePosition = { x: event.clientX, y: event.clientY };
+        this._applyDragRotation(deltaX, deltaY);
+        this._previousPosition = position;
     }
 
-    private onMouseUp() {
-        this.isDragging = false;
+    private _onDragEnd(): void {
+        this._isDragging = false;
     }
 
-    private onWindowResize() {
-        const container = this.skillsContainer()?.nativeElement;
+    private _onTouchStart(event: TouchEvent): void {
+        if (event.touches.length === 1) {
+            this._onDragStart(event);
+        }
+    }
 
-        if (!container || !this.camera || !this.renderer) {
+    private _onResize = (): void => {
+        const container = this._skillsContainer().nativeElement;
+
+        if (!container || !this._camera || !this._renderer) {
             return;
         }
 
         const { width, height } = container.getBoundingClientRect();
         const size = Math.min(width, height);
 
-        this.renderer.setSize(size, size);
-        this.camera.aspect = 1;
-        this.camera.updateProjectionMatrix();
+        this._renderer.setSize(size, size);
+        this._camera.aspect = 1;
+        this._camera.updateProjectionMatrix();
     }
 
-    private cleanup() {
-        if (this.animationId) {
-            cancelAnimationFrame(this.animationId);
-            this.animationId = null;
-        }
-
-        if (this.renderer) {
-            const container = this.skillsContainer()?.nativeElement;
-            if (container && container.contains(this.renderer.domElement)) {
-                container.removeChild(this.renderer.domElement);
-            }
-            this.renderer = null;
-        }
-
-        this.objects = [];
-        this.scene = null;
-        this.camera = null;
-
-        // Удаляем обработчики событий
-        Object.entries(this.mouseEventListeners).forEach(([event, listener]) => {
-            if (event === 'resize') {
-                window.removeEventListener(event, listener);
-            } else {
-                const container = this.skillsContainer()?.nativeElement;
-                if (container) {
-                    container.removeEventListener(event, listener);
-                }
-            }
-        });
-        this.mouseEventListeners = {};
+    private _getEventPosition(event: MouseEvent | TouchEvent): { x: number; y: number } {
+        const source = 'touches' in event ? event.touches[0] : event;
+        return { x: source.clientX, y: source.clientY };
     }
 
-    public ngOnDestroy() {
-        this.cleanup();
+    private _applyDragRotation(deltaX: number, deltaY: number): void {
+        if (!this._scene) {
+            return;
+        }
+
+        const sensitivity = 'ontouchstart' in window ? 0.002 : 0.001;
+        const quaternionX = new THREE.Quaternion();
+        const quaternionY = new THREE.Quaternion();
+
+        quaternionY.setFromAxisAngle(new THREE.Vector3(0, 1, 0), deltaX * sensitivity);
+        quaternionX.setFromAxisAngle(new THREE.Vector3(1, 0, 0), deltaY * sensitivity);
+
+        this._dragQuaternion.copy(quaternionY).multiply(quaternionX);
+        this._rotationQuaternion.premultiply(this._dragQuaternion);
+        this._scene.setRotationFromQuaternion(this._rotationQuaternion);
+
+        this._angularVelocity.set(deltaY * sensitivity, deltaX * sensitivity);
+        this._clampAngularVelocity();
+    }
+
+    private _cleanup(): void {
+        if (this._animationId) {
+            cancelAnimationFrame(this._animationId);
+            this._animationId = null;
+        }
+
+        if (this._renderer) {
+            this._renderer.domElement.remove();
+            this._renderer = null;
+        }
+
+        this._objects = [];
+        this._scene = null;
+        this._camera = null;
     }
 }
