@@ -1,9 +1,21 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, viewChild, viewChildren } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    DestroyRef,
+    ElementRef,
+    inject,
+    Injector,
+    OnInit,
+    viewChild,
+    viewChildren
+} from '@angular/core';
 import { LevelIndicatorComponent } from '@components/level-indicator/level-indicator.component';
 import { TagComponent } from '@components/tag/tag.component';
 import { SKILLS_LIST } from '@pages/home-page/constants/skills-list.constant';
 import * as THREE from 'three';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { filter, first, tap } from 'rxjs';
 
 const CONFIG = {
     MIN_ROTATION_SPEED: 0.0003,
@@ -24,10 +36,12 @@ const CONFIG = {
     styleUrl: './skills-container.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkillsContainer implements AfterViewInit {
+export class SkillsContainer implements OnInit {
     protected readonly skillsList = SKILLS_LIST;
 
-    private _destroyRef = inject(DestroyRef);
+    private destroyRef = inject(DestroyRef);
+    private injector = inject(Injector);
+
     private _skillsContainer = viewChild.required<ElementRef>('skillsContainer');
     private _skillElementsList = viewChildren<string, ElementRef>('skill', { read: ElementRef });
 
@@ -52,8 +66,14 @@ export class SkillsContainer implements AfterViewInit {
         elementToCamera: new THREE.Vector3()
     };
 
-    public ngAfterViewInit(): void {
-        this._initScene();
+    public ngOnInit(): void {
+        toObservable(this._skillElementsList, { injector: this.injector })
+            .pipe(
+                filter(skills => Boolean(skills.length)),
+                first(),
+                tap(() => this._initScene())
+            )
+        .subscribe();
     }
 
     private _initScene(): void {
@@ -66,7 +86,7 @@ export class SkillsContainer implements AfterViewInit {
         this._setupEventListeners(container);
         this._animate();
 
-        this._destroyRef.onDestroy(() => this._cleanup());
+        this.destroyRef.onDestroy(() => this._cleanup());
     }
 
     private _setupThreeJS(container: HTMLElement, size: number): void {
