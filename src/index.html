@@ -1,19 +1,173 @@
 <!doctype html>
-<html lang="en">
+<html
+    lang="en"
+    prefix="og: https://ogp.me/ns#"
+>
 <head>
     <meta charset="utf-8">
-    <title>SSE-programmer</title>
-    <base href="/">
+
+    <!-- Basic Meta -->
+    <title>Stanislav Stolbennikov - Angular Developer & Software Engineer</title>
+    <meta
+        name="description"
+        content="Stanislav Stolbennikov - Angular Developer with expertise in TypeScript, RxJS, NGRX, and modern web technologies. Portfolio, blog, and software engineering insights."
+    >
+    <meta
+        name="keywords"
+        content="Angular Developer, TypeScript, RxJS, NGRX, Software Engineer, Frontend Developer, Web Development, JavaScript, Vue.js, PostgreSQL, Docker, CI/CD"
+    >
+    <meta
+        name="author"
+        content="Stanislav Stolbennikov"
+    >
+    <meta
+        name="robots"
+        content="index, follow, max-image-preview:large"
+    >
+
+    <!-- Viewport -->
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
     >
+
+    <!-- Canonical -->
+    <link
+        rel="canonical"
+        href="https://sse-programmer.com"
+    >
+    <base href="/">
+
+    <!-- Open Graph / Facebook -->
+    <meta
+        property="og:type"
+        content="website"
+    >
+    <meta
+        property="og:url"
+        content="https://sse-programmer.com/"
+    >
+    <meta
+        property="og:title"
+        content="Stanislav Stolbennikov - Angular Developer & Software Engineer"
+    >
+    <meta
+        property="og:description"
+        content="Expert Angular developer specializing in modern web technologies, RxJS, NGRX, and scalable frontend architecture. View my portfolio and technical blog."
+    >
+    <meta
+        property="og:image"
+        content="https://sse-programmer.com/assets/images/og-image.jpg"
+    >
+    <meta
+        property="og:image:width"
+        content="1200"
+    >
+    <meta
+        property="og:image:height"
+        content="630"
+    >
+    <meta
+        property="og:image:alt"
+        content="Stanislav Stolbennikov - Angular Developer"
+    >
+    <meta
+        property="og:site_name"
+        content="SSE Programmer"
+    >
+    <meta
+        property="og:locale"
+        content="en_US"
+    >
+
+    <!-- Twitter -->
+    <meta
+        property="twitter:card"
+        content="summary_large_image"
+    >
+    <meta
+        property="twitter:url"
+        content="https://sse-programmer.com/"
+    >
+    <meta
+        property="twitter:title"
+        content="Stanislav Stolbennikov - Angular Developer"
+    >
+    <meta
+        property="twitter:description"
+        content="Angular specialist with expertise in TypeScript, RxJS, and modern web development. Portfolio and technical insights."
+    >
+    <meta
+        property="twitter:image"
+        content="https://sse-programmer.com/assets/images/twitter-image.jpg"
+    >
+    <meta
+        property="twitter:creator"
+        content="@sse_programmer"
+    >
+
+    <!-- Additional Meta -->
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="default"
+    >
+    <meta
+        name="apple-mobile-web-app-title"
+        content="SSE Programmer"
+    >
+
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Stanislav Stolbennikov",
+            "url": "https://sse-programmer.com",
+            "image": "https://sse-programmer.com/assets/images/profile.jpg",
+            "description": "Angular Developer and Software Engineer",
+            "jobTitle": "Angular Developer",
+            "worksFor": {
+                "@type": "Organization",
+                "name": "Software Engineering"
+            },
+            "knowsAbout": [
+                "Angular",
+                "TypeScript",
+                "RxJS",
+                "NGRX",
+                "JavaScript",
+                "Vue.js",
+                "PrimeNG",
+                "PostgreSQL",
+                "Docker",
+                "CI/CD",
+                "Web Development",
+                "Frontend Architecture",
+                "REST API",
+                "Agile Methodologies",
+                "Scrum",
+                "SAFe"
+            ],
+            "sameAs": [
+                "https://github.com/yourusername",
+                "https://linkedin.com/in/yourprofile",
+                "https://twitter.com/yourhandle"
+            ]
+        }
+    </script>
+
+    <!-- Icons & Manifest -->
     <link
         rel="icon"
         type="image/x-icon"
         href="favicon.ico"
     >
 
+    <!-- Preload Critical Resources -->
     <link
         rel="preload"
         href="assets/fonts/TitanOne.ttf"
@@ -21,7 +175,6 @@
         type="font/ttf"
         crossorigin
     >
-
     <link
         rel="preload"
         href="assets/fonts/PatuaOne.ttf"
@@ -29,7 +182,6 @@
         type="font/ttf"
         crossorigin
     >
-
     <link
         rel="preload"
         href="assets/fonts/Alegreya.ttf"
@@ -37,7 +189,6 @@
         type="font/ttf"
         crossorigin
     >
-
     <link
         rel="preload"
         href="assets/fonts/Alegreya-Italic.ttf"
@@ -46,8 +197,78 @@
         crossorigin
     >
 
+    <!-- Preload CSS -->
+    <link
+        rel="preload"
+        href="styles.css"
+        as="style"
+        onload="this.onload=null;this.rel='stylesheet'"
+    >
+    <noscript>
+        <link
+            rel="stylesheet"
+            href="styles.css"
+        >
+    </noscript>
+
+    <!-- DNS Prefetch -->
+    <link
+        rel="dns-prefetch"
+        href="https://fonts.googleapis.com"
+    >
+    <link
+        rel="dns-prefetch"
+        href="https://cdnjs.cloudflare.com"
+    >
+
+    <!-- Performance -->
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <!-- Additional SEO -->
+    <meta
+        name="subject"
+        content="Angular Development, Web Technologies, Software Engineering"
+    >
+    <meta
+        name="copyright"
+        content="Stanislav Stolbennikov"
+    >
+    <meta
+        name="language"
+        content="EN"
+    >
+    <meta
+        name="revised"
+        content="Monday, October 14th, 2024"
+    >
+    <meta
+        name="classification"
+        content="Software Development, Web Development"
+    >
+    <meta
+        name="rating"
+        content="General"
+    >
+    <meta
+        name="referrer"
+        content="origin-when-cross-origin"
+    >
+
 </head>
 <body>
 <bc-root></bc-root>
+
+<noscript>
+    <div style="text-align: center; padding: 2rem; font-family: Arial, sans-serif;">
+        <h1>SSE Programmer - Stanislav Stolbennikov</h1>
+        <p>Angular Developer & Software Engineer</p>
+        <p>Please enable JavaScript to view this website.</p>
+        <p>Contact: [your-email]</p>
+    </div>
+</noscript>
 </body>
 </html>

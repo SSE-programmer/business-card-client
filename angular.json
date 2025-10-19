@@ -24,7 +24,22 @@
                         "inlineStyleLanguage": "scss",
                         "assets": [
                             "src/favicon.ico",
-                            "src/assets"
+                            "src/assets",
+                            {
+                                "glob": "robots.txt",
+                                "input": "src",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "sitemap.xml",
+                                "input": "src",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "manifest.webmanifest",
+                                "input": "src",
+                                "output": "/"
+                            }
                         ],
                         "styles": [
                             "node_modules/aos/dist/aos.css",

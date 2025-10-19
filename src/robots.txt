@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Allow: *.js
+Allow: *.css
+
+Allow: /#/home
+Allow: /#/blog
+
+Disallow: /api/
+
+Host: sse-programmer.com
+
+Sitemap: https://sse-programmer.com/sitemap.xml
