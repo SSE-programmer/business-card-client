@@ -12,6 +12,7 @@
     &::-webkit-scrollbar {
         display: block;
         width: 6px;
+        height: 6px;
         opacity: .2;
     }
 
@@ -31,4 +32,12 @@
     &::-webkit-scrollbar-thumb:hover {
         background: var(--bc-light-primary-color);
     }
+}
+
+code {
+    font-size: 18px;
+
+    background-color: var(--bc-light-accent-color);
+    border-radius: var(--bc-border-radius-8);
+    border: 2px dashed var(--bc-accent-color);
 }

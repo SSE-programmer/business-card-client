@@ -18,6 +18,5 @@ export class MediaGridComponent {
 
     public readonly MAX_VISIBLE_MEDIA_COUNT: number = 6;
     public readonly mediaSignal: InputSignal<IMedia[]> = input.required({ alias: 'media' });
-    public mediaClick = output<IMediaEvent<Event>>();
-    protected readonly output = output;
+    public readonly mediaClick = output<IMediaEvent<Event>>();
 }

@@ -8,6 +8,7 @@ import { TagComponent } from '@components/tag/tag.component';
 import { IconCommentsComponent } from '@components/icons/icon-comments/icon-comments.component';
 import { IconViewsComponent } from '@components/icons/icon-views/icon-views.component';
 import { ImageViewerService } from '@components/image-viewer/image-viewer.service';
+import { TelegramFormatPipe } from '@shared/pipes/telegram-format.pipe';
 
 export interface IPositionModalData {
     post: ITelegramMessage;
@@ -24,6 +25,7 @@ export interface IPositionModalData {
         TagComponent,
         IconCommentsComponent,
         IconViewsComponent,
+        TelegramFormatPipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

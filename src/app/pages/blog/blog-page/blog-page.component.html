@@ -20,7 +20,7 @@
             <bc-loading-spinner class="bc-absolute-center"></bc-loading-spinner>
         </div>
     } @else if (posts?.length) {
-        <div class="posts-container bc-flex bc-flex-col bc-gap-48 bc-self-center">
+        <div class="posts-container bc-flex bc-flex-col bc-gap-48 bc-self-center bc-max-w-full">
             @for (post of posts; track postsTrackBy(post)) {
                 <bc-post [post]="post"></bc-post>
 
