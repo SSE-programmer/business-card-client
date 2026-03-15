@@ -6,6 +6,16 @@
         max-width: 600px;
     }
 
+    .post {
+        padding: var(--bc-padding-24);
+        border-radius: var(--bc-border-radius-16);
+        border: 2px dashed var(--bc-primary-color);
+
+        @media (max-width: 720px) {
+            padding: var(--bc-padding-12);
+        }
+    }
+
     .post-text-container {
         max-height: 200px;
         overflow: hidden;
