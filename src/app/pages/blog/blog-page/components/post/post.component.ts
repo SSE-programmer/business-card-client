@@ -5,8 +5,8 @@ import { IMediaEvent, MediaGridComponent } from '../media-grid/media-grid.compon
 import { DynamicModalService } from '@components/dynamic-modal/dynamic-modal.service';
 import { PostModalComponent } from './components/post-modal/post-modal.component';
 import { TagComponent } from '@components/tag/tag.component';
-import { IconCommentsComponent } from '@components/icons/icon-comments/icon-comments.component';
-import { IconViewsComponent } from '@components/icons/icon-views/icon-views.component';
+import { IconCommentsComponent } from '@icons/icon-comments/icon-comments.component';
+import { IconViewsComponent } from '@icons/icon-views/icon-views.component';
 import { ImageViewerService } from '@components/image-viewer/image-viewer.service';
 import { TelegramFormatPipe } from '@shared/pipes/telegram-format.pipe';
 import { isOverflowHeight } from '@shared/utils/isOverflowHeight';

@@ -1,26 +1,19 @@
 import { Injectable } from '@angular/core';
-import { httpResource, HttpResourceRef } from '@angular/common/http';
 import { API_PREFIX } from '@config/api';
-import { ITelegramMessage, ITelegramMessageGroup } from './models/ITelegramMessage';
-import { isWebResponse, IWebResponse } from '@models/IWebResponse';
+import { Post } from './models/ITelegramMessage';
+import { IWebResponse } from '@models/IWebResponse';
+import { BaseApiService } from '@services/http-services/base-api.service';
+import { shareReplay } from 'rxjs';
+
 
 @Injectable({ providedIn: 'root' })
-export class TelegramHttpService {
-    private readonly _apiGroupPrefix = '/telegram';
+export class TelegramHttpService extends BaseApiService {
+    readonly #apiGroupPrefix = '/telegram';
 
-    public getPostsResource(): HttpResourceRef<(ITelegramMessage | ITelegramMessageGroup)[]> {
-        return httpResource<(ITelegramMessage | ITelegramMessageGroup)[]>(
-            () => ({ url: `${API_PREFIX}${this._apiGroupPrefix}/posts` }),
-            {
-                defaultValue: [],
-                parse: (value) => {
-                    if (isWebResponse(value)) {
-                        return (value as IWebResponse<(ITelegramMessage | ITelegramMessageGroup)[]>)?.data || [];
-                    }
+    readonly #posts$ = this.http.get<IWebResponse<Post[]>>(`${API_PREFIX}${this.#apiGroupPrefix}/posts`)
+        .pipe(shareReplay({ refCount: true, bufferSize: 1 }));
 
-                    return [];
-                },
-            }
-        );
+    public getPosts() {
+        return this.#posts$;
     }
 }

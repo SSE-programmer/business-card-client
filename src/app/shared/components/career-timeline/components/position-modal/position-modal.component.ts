@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { TagComponent } from '../../../tag/tag.component';
 import { DynamicModalConfig } from '../../../dynamic-modal/dynamic-modal.config';
 import { DynamicModalService } from '../../../dynamic-modal/dynamic-modal.service';
+import { IconCrossComponent } from '@shared/icons/icon-cross/icon-cross.component';
 
 export interface IPositionModalData {
     company: string;
@@ -17,6 +18,7 @@ export interface IPositionModalData {
     imports: [
         DatePipe,
         TagComponent,
+        IconCrossComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

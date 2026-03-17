@@ -27,14 +27,13 @@
 
     <div class="image-viewer">
         <div class="bc-flex bc-items-center bc-justify-end bc-w-full">
-            <div
-                class="close-button bc-flex bc-items-center bc-h-fit bc-text-34"
+            <bc-icon-cross
+                class="close-button"
                 role="button"
                 (click)="closeViewer(); $event.stopPropagation()"
                 (keydown.enter)="closeViewer()"
                 tabindex="0"
-            >✖
-            </div>
+            />
         </div>
         <div class="media-container bc-flex bc-gap-12">
             @for (mediaItem of config.media; track mediaItem.photoUrl) {

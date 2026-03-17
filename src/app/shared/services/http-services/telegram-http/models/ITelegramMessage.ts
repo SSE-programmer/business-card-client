@@ -26,6 +26,8 @@ export interface ITelegramMessageGroup {
     messages: ITelegramMessage[];
 }
 
+export type Post = ITelegramMessage | ITelegramMessageGroup;
+
 export interface IMedia {
     type: string;
     photoUrl?: string | null;

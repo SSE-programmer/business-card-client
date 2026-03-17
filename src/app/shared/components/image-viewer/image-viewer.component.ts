@@ -18,6 +18,7 @@ import { ImageViewerService } from './image-viewer.service';
 import { ImageViewerConfig } from './image-viewer.config';
 import { TagComponent } from '@components/tag/tag.component';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { IconCrossComponent } from '@icons/icon-cross/icon-cross.component';
 
 const SELECTED_INDEX_VISIBILITY_TIME = 2000;
 const MOUSE_MOVE_THROTTLE_TIME = 16;
@@ -29,7 +30,8 @@ const MIN_COORDINATE_DELTA_FOR_SWITCH = 50;
     standalone: true,
     imports: [
         TagComponent,
-        CdkTrapFocus
+        CdkTrapFocus,
+        IconCrossComponent
     ],
     templateUrl: './image-viewer.component.html',
     styleUrl: './image-viewer.component.scss',

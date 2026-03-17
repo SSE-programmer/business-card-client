@@ -57,6 +57,12 @@
             "@components/*": [
                 "./src/app/shared/components/*"
             ],
+            "@icons": [
+                "./src/app/shared/icons"
+            ],
+            "@icons/*": [
+                "./src/app/shared/icons/*"
+            ],
             "@directives": [
                 "./src/app/shared/directives"
             ],

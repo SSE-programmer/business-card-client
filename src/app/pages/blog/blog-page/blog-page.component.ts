@@ -1,13 +1,17 @@
-import { ChangeDetectionStrategy, Component, computed, HostBinding, inject, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, Signal } from '@angular/core';
 import { TelegramHttpService } from '@services/http-services/telegram-http/telegram-http.service';
 import {
     isTelegramMessage,
     isTelegramMessageGroup,
     ITelegramMessage,
     ITelegramMessageGroup,
+    Post,
 } from '@services/http-services/telegram-http/models/ITelegramMessage';
 import { PostComponent } from './components/post/post.component';
 import { LoadingSpinnerComponent } from '@components/loading-spinner/loading-spinner.component';
+import { getDataFromWebResponseOperator } from '@shared/utils/http/getDataFromWebResponse';
+import { catchError, finalize, map, Observable, of } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'bc-blog-page',
@@ -23,18 +27,17 @@ import { LoadingSpinnerComponent } from '@components/loading-spinner/loading-spi
 export class BlogPageComponent {
     private readonly telegramHttpService = inject(TelegramHttpService);
 
-    private _postsResource = this.telegramHttpService.getPostsResource();
+    readonly #isPostsLoadingSignal = signal(true);
+    readonly #posts$: Observable<ITelegramMessage[]> = this.telegramHttpService.getPosts().pipe(
+        getDataFromWebResponseOperator(),
+        map((posts) => posts.map((post) => this._preparePost(post))),
+        catchError(() => of([])),
+        finalize(() => this.#isPostsLoadingSignal.set(false)),
+    );
+    protected readonly isPostsLoadingSignal = this.#isPostsLoadingSignal.asReadonly();
+    protected readonly postsSignal = toSignal(this.#posts$, { initialValue: [] });
 
-    public postsSignal: Signal<ITelegramMessage[]> = computed(() => {
-        if (this._postsResource.error()) {
-            return [];
-        }
-
-        return this._postsResource.value().map(post => this._preparePost(post));
-    });
-    public postsLoadingSignal: Signal<boolean> = this._postsResource.isLoading;
-
-    public postsTrackBy(post: ITelegramMessage | ITelegramMessageGroup): ITelegramMessage | ITelegramMessageGroup | number | string {
+    public postsTrackBy(post: Post): Post | number | string {
         if (isTelegramMessage(post)) {
             return post.id;
         }
@@ -46,21 +49,22 @@ export class BlogPageComponent {
         return post;
     }
 
-    private _preparePost(data: ITelegramMessage | ITelegramMessageGroup): ITelegramMessage {
+    private _preparePost(data: Post): ITelegramMessage {
+        const dataClone = structuredClone(data);
         let result: ITelegramMessage;
 
-        if (isTelegramMessageGroup(data)) {
-            let mainMessage: ITelegramMessage | undefined = data.messages.find(message => message.mainMessage);
+        if (isTelegramMessageGroup(dataClone)) {
+            let mainMessage: ITelegramMessage | undefined = dataClone.messages.find(message => message.mainMessage);
 
             if (!mainMessage) {
-                mainMessage = data.messages[0];
+                mainMessage = dataClone.messages[0];
             }
 
             if (!Array.isArray(mainMessage.media)) {
                 mainMessage.media = [];
             }
 
-            data.messages.forEach(message => {
+            dataClone.messages.forEach(message => {
                 if (message === mainMessage) {
                     return;
                 }
@@ -72,7 +76,7 @@ export class BlogPageComponent {
 
             result = mainMessage;
         } else {
-            result = data;
+            result = dataClone;
         }
 
         result.reactions = (result.reactions || []).filter(reaction => reaction.reaction.className === 'ReactionEmoji');

@@ -13,9 +13,9 @@
     </div>
 
     @let posts = postsSignal();
-    @let postsIsLoading = postsLoadingSignal();
+    @let isPostsLoading = isPostsLoadingSignal();
 
-    @if (postsIsLoading) {
+    @if (isPostsLoading) {
         <div class="bc-relative bc-flex bc-flex-col bc-self-center bc-flex-1">
             <bc-loading-spinner class="bc-absolute-center"></bc-loading-spinner>
         </div>
