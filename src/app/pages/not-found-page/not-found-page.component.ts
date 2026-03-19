@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IconNotFoundComponent } from '@icons/icon-not-found/icon-not-found.component';
 
 @Component({
     selector: 'bc-not-found-page-component',
@@ -6,5 +7,8 @@ import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
     styleUrls: ['./not-found-page.component.scss'],
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        IconNotFoundComponent
+    ]
 })
 export class NotFoundPageComponent {}
