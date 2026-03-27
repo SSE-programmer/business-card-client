@@ -1,6 +1,6 @@
 @let proj = project();
 
-<a class="project-card bc-flex bc-flex-col" [routerLink]="['/projects', proj.id]">
+<a class="project-card bc-flex bc-flex-col" [routerLink]="['/projects', proj.id]" queryParamsHandling="preserve">
     <div class="preview-container bc-flex bc-justify-center bc-items-center">
         @if (proj.previewImage) {
             <img

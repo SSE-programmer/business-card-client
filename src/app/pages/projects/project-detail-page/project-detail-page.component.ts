@@ -70,7 +70,10 @@ export class ProjectDetailPageComponent {
     }
 
     protected goBack(): void {
-        this.router.navigate(['/projects']);
+        const category = this.project()?.category;
+        this.router.navigate(['/projects'], {
+            queryParams: category ? { tab: category } : {},
+        });
     }
 
     protected openImageViewer(event: IMediaEvent): void {
