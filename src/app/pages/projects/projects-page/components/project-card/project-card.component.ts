@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IProject } from '../../../models/project.model';
 import { TagComponent } from '@components/tag/tag.component';
@@ -16,6 +16,11 @@ import { TagComponent } from '@components/tag/tag.component';
 })
 export class ProjectCardComponent {
     readonly project = input.required<IProject>();
+
+    @HostBinding('animate.enter')
+    get enterAnimation() {
+        return 'enter-animation';
+    }
 
     protected formatPeriod(project: IProject): string {
         if (!project.period) {

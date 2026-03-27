@@ -11,20 +11,18 @@
     &.closed {
         animation: fade-out var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
     }
-}
 
-.tooltip {}
+    .arrow {
+        position: absolute;
+        z-index: -50;
 
-.arrow {
-    position: absolute;
-    z-index: -50;
-
-    &::before {
-        content: '';
-        display: block;
-        width: 0;
-        border: 10px solid transparent;
-        border-bottom: 10px solid var(--bc-border-default-color);
+        &::before {
+            content: '';
+            display: block;
+            width: 0;
+            border: 10px solid transparent;
+            border-bottom: 10px solid var(--bc-border-default-color);
+        }
     }
 }
 
@@ -43,24 +41,3 @@
         top: -20px;
     }
 }
-
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes fade-out {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-

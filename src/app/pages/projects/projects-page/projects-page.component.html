@@ -22,7 +22,7 @@
     @if (projects.length) {
         <section class="projects-grid bc-w-full">
             @for (project of projects; track project.id) {
-                <bc-project-card [project]="project"></bc-project-card>
+                <bc-project-card [project]="project"/>
             }
         </section>
     } @else {
