@@ -5,7 +5,7 @@
 
 .project-card {
     width: 100%;
-    border: 2px dashed var(--bc-primary-color);
+    border: 2px dashed var(--bc-border-default-color);
     border-radius: var(--bc-border-radius-16);
     overflow: hidden;
     transition: box-shadow var(--bc-transition-duration-default),

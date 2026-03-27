@@ -15,6 +15,17 @@ export const PROJECTS: IProject[] = [
         stack: ['Angular 17+', 'TypeScript', 'AngularJS', 'WebSocket', 'Webpack', 'Storybook', 'Bun', 'Elysia', 'Gotenberg'],
         period: { from: '2023-07' },
         contentPath: 'assets/projects/inschooltech/content.md',
+        previewImage: 'assets/projects/inschooltech/preview.webp',
+        images: [
+            'assets/projects/inschooltech/img.webp',
+            'assets/projects/inschooltech/img_1.webp',
+            'assets/projects/inschooltech/img_2.webp',
+            'assets/projects/inschooltech/img_3.webp',
+            'assets/projects/inschooltech/img_4.webp',
+            'assets/projects/inschooltech/img_5.webp',
+            'assets/projects/inschooltech/img_6.webp',
+            'assets/projects/inschooltech/img_7.webp',
+        ]
     },
     {
         id: 'smart-consulting',
@@ -24,6 +35,15 @@ export const PROJECTS: IProject[] = [
         stack: ['Angular', 'TypeScript', 'RxJS', 'WebSocket', 'SCSS', 'WCAG 2.1'],
         period: { from: '2021-07', to: '2023-12' },
         contentPath: 'assets/projects/smart-consulting/content.md',
+        previewImage: 'assets/projects/smart-consulting/preview.webp',
+        images: [
+            'assets/projects/smart-consulting/img.webp',
+            'assets/projects/smart-consulting/img_1.webp',
+            'assets/projects/smart-consulting/img_2.webp',
+            'assets/projects/smart-consulting/img_3.webp',
+            'assets/projects/smart-consulting/img_4.webp',
+            'assets/projects/smart-consulting/img_5.webp',
+        ]
     },
     {
         id: 'business-card',
@@ -33,6 +53,7 @@ export const PROJECTS: IProject[] = [
         stack: ['Angular 20', 'TypeScript', 'SCSS', 'Three.js', 'highlight.js', 'AOS', 'View Transitions API'],
         period: { from: '2024-06' },
         contentPath: 'assets/projects/business-card/content.md',
+        previewImage: 'assets/projects/business-card/preview.webp',
     },
     {
         id: 'annoto',
@@ -42,6 +63,14 @@ export const PROJECTS: IProject[] = [
         stack: ['Angular 21', 'TypeScript', 'SCSS', 'Range API', 'DOM API', 'localStorage'],
         period: { from: '2026-03', to: '2026-03' },
         contentPath: 'assets/projects/annoto/content.md',
+        previewImage: 'assets/projects/annoto/preview.webp',
+        images: [
+            'assets/projects/annoto/img.webp',
+            'assets/projects/annoto/img_1.webp',
+            'assets/projects/annoto/img_2.webp',
+            'assets/projects/annoto/img_3.webp',
+            'assets/projects/annoto/img_4.webp',
+        ]
     },
     {
         id: 'soft-mall-calendar',
@@ -51,5 +80,10 @@ export const PROJECTS: IProject[] = [
         stack: ['Vue 3', 'TypeScript', 'Vite', 'SCSS'],
         period: { from: '2025-07', to: '2025-07' },
         contentPath: 'assets/projects/soft-mall-calendar/content.md',
+        previewImage: 'assets/projects/soft-mall-calendar/preview.webp',
+        images: [
+            'assets/projects/soft-mall-calendar/img.webp',
+            'assets/projects/soft-mall-calendar/img_1.webp',
+        ]
     },
 ];
