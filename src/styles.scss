@@ -24,6 +24,10 @@ ol, ul {
     padding-inline-start: 0;
 }
 
+a {
+    color: var(--bc-text-default-color);
+}
+
 body {
     margin: 0;
     background-repeat: no-repeat;

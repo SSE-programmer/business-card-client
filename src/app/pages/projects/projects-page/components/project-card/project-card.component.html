@@ -1,0 +1,35 @@
+@let proj = project();
+
+<a class="project-card bc-flex bc-flex-col" [routerLink]="['/projects', proj.id]">
+    <div class="preview-container bc-flex bc-justify-center bc-items-center">
+        @if (proj.previewImage) {
+            <img
+                class="preview-image"
+                [src]="proj.previewImage"
+                [alt]="proj.title"
+            >
+        } @else {
+            <span class="placeholder-title bc-font-patua-one bc-text-26 bc-light-accent-color">{{ proj.title }}</span>
+        }
+    </div>
+
+    <div class="card-body bc-flex bc-flex-col bc-gap-8 bc-p-16">
+        <div class="bc-flex bc-flex-col bc-gap-4">
+            <h3 class="bc-h bc-text-20">{{ proj.title }}</h3>
+
+            @if (proj.period) {
+                <span class="bc-font-patua-one bc-text-14 bc-text-light-color">{{ formatPeriod(proj) }}</span>
+            }
+        </div>
+
+        <p class="description bc-text-16">{{ proj.description }}</p>
+
+        @if (proj.stack.length) {
+            <div class="bc-flex bc-gap-4 bc-flex-wrap">
+                @for (tech of proj.stack; track tech) {
+                    <bc-tag class="bc-text-14">{{ tech }}</bc-tag>
+                }
+            </div>
+        }
+    </div>
+</a>

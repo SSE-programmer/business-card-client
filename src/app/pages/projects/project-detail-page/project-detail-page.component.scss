@@ -1,0 +1,109 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+
+    .project-detail-container {
+        max-width: 900px;
+    }
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: var(--bc-text-default-color);
+    cursor: pointer;
+    padding: 0;
+    transition: color var(--bc-transition-duration-default);
+
+    &:hover {
+        color: var(--bc-accent-color);
+    }
+}
+
+.media-grid {
+    max-width: 700px;
+}
+
+::ng-deep .markdown-content {
+    line-height: 1.7;
+    word-break: break-word;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Patua One', serif;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        line-height: 1.2;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    h2 {
+        font-size: 34px;
+    }
+
+    h3 {
+        font-size: 28px;
+    }
+
+    h4 {
+        font-size: 22px;
+    }
+
+    h5 {
+        font-size: 18px;
+    }
+
+    p {
+        margin-bottom: 0.8em;
+    }
+
+    ul, ol {
+        padding-left: 1.5em;
+        margin-bottom: 0.8em;
+        list-style-type: disc;
+    }
+
+    ol {
+        list-style-type: decimal;
+    }
+
+    blockquote {
+        border-left: 3px solid var(--bc-accent-color);
+        padding-left: 1em;
+        margin: 0.8em 0;
+        color: var(--bc-text-light-color);
+    }
+
+    a {
+        color: var(--bc-text-default-color);
+        text-decoration: underline;
+    }
+
+    img {
+        max-width: 100%;
+        border-radius: var(--bc-border-radius-8);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1em;
+
+        th, td {
+            border: 1px dashed var(--bc-border-default-color);
+            padding: 0.5em 0.8em;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--bc-bg-middle-color);
+            color: var(--bc-light-accent-color);
+            font-family: 'Patua One', serif;
+        }
+    }
+}

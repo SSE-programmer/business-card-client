@@ -1,0 +1,54 @@
+@let proj = project();
+
+@if (proj) {
+    <main class="project-detail-container bc-flex bc-flex-col bc-gap-32 bc-flex-1 bc-self-center bc-w-full">
+        <button
+            class="back-button bc-flex bc-items-center bc-font-patua-one bc-text-18 bc-flex bc-items-center bc-gap-8"
+            type="button"
+            (click)="goBack()"
+        >
+            <bc-icon-back/> Back to Projects
+        </button>
+
+        <div class="bc-flex bc-flex-col bc-gap-8">
+            <h1 class="bc-h">{{ proj.title }}</h1>
+
+            @if (proj.period) {
+                <span class="bc-font-patua-one bc-text-16 bc-text-light-color">{{ formatPeriod(proj) }}</span>
+            }
+
+            @if (proj.stack.length) {
+                <div class="bc-flex bc-gap-4 bc-flex-wrap">
+                    @for (tech of proj.stack; track tech) {
+                        <bc-tag class="bc-text-14">{{ tech }}</bc-tag>
+                    }
+                </div>
+            }
+        </div>
+
+        @let media = mediaItems();
+        @if (media.length) {
+            <bc-media-grid
+                class="media-grid bc-self-center"
+                [media]="media"
+                (mediaClick)="openImageViewer($event)"
+            ></bc-media-grid>
+        }
+
+        @let content = contentSignal();
+        @if (content) {
+            <article class="markdown-content" [innerHTML]="content | markdown"></article>
+        }
+    </main>
+} @else {
+    <div class="bc-flex bc-flex-col bc-justify-center bc-items-center bc-flex-1">
+        <span class="bc-font-patua-one bc-text-center bc-text-26">Project not found</span>
+        <button
+            class="back-button bc-font-patua-one bc-text-18 bc-mt-16"
+            type="button"
+            (click)="goBack()"
+        >
+            &larr; Back to Projects
+        </button>
+    </div>
+}

@@ -13,10 +13,16 @@ export const _pagesRoutes: Routes = [
                 .then(m => m.HomePageComponent)
     },
     {
-        path: 'home',
+        path: 'projects',
         loadComponent: () =>
-            import('./home-page/home-page.component')
-                .then(m => m.HomePageComponent)
+            import('./projects/projects-page/projects-page.component')
+                .then(m => m.ProjectsPageComponent)
+    },
+    {
+        path: 'projects/:id',
+        loadComponent: () =>
+            import('./projects/project-detail-page/project-detail-page.component')
+                .then(m => m.ProjectDetailPageComponent)
     },
     {
         path: 'blog',

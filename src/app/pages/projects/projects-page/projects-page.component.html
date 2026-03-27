@@ -1,0 +1,33 @@
+<main class="projects-page-container bc-flex bc-flex-col bc-gap-48 bc-flex-1 bc-items-center bc-self-center bc-w-full">
+    <div class="bc-flex bc-flex-col bc-gap-8 bc-w-full">
+        <h1 class="bc-h">Projects</h1>
+        <p>A collection of projects I've worked on across different domains.</p>
+    </div>
+
+    <nav class="tabs bc-flex bc-gap-8 bc-w-full">
+        @for (category of categories; track category.type) {
+            <button
+                class="tab bc-font-patua-one bc-text-18"
+                type="button"
+                [class.active]="activeCategory() === category.type"
+                (click)="setCategory(category.type)"
+            >
+                {{ category.title }}
+            </button>
+        }
+    </nav>
+
+    @let projects = filteredProjects();
+
+    @if (projects.length) {
+        <section class="projects-grid bc-w-full">
+            @for (project of projects; track project.id) {
+                <bc-project-card [project]="project"></bc-project-card>
+            }
+        </section>
+    } @else {
+        <div class="bc-flex bc-flex-col bc-justify-center bc-items-center bc-flex-1">
+            <span class="bc-font-patua-one bc-text-center">No projects in this category yet</span>
+        </div>
+    }
+</main>

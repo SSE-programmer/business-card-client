@@ -1,0 +1,44 @@
+:host {
+    display: flex;
+    width: 100%;
+}
+
+.project-card {
+    width: 100%;
+    border: 2px dashed var(--bc-primary-color);
+    border-radius: var(--bc-border-radius-16);
+    overflow: hidden;
+    transition: box-shadow var(--bc-transition-duration-default),
+                border-color var(--bc-transition-duration-default);
+    cursor: pointer;
+
+    &:hover, &:focus-visible {
+        box-shadow: 0 4px 12px 0 var(--bc-shadow-default-color);
+    }
+}
+
+.preview-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: var(--bc-bg-middle-color);
+    overflow: hidden;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-title {
+    text-align: center;
+    padding: var(--bc-padding-16);
+    word-break: break-word;
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

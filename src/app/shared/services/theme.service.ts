@@ -53,6 +53,7 @@ export class ThemeService {
 
     private _applyThemeToBody(theme: EThemeType): void {
         const classList = document.body.classList;
+
         Array.from(classList)
             .filter(className => className.startsWith(this._themePrefix))
             .forEach(className => classList.remove(className));
