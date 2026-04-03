@@ -7,14 +7,14 @@
 
     .skills-container {
         position: relative;
-        transition: width var(--bc-transition-duration-default), height var(--bc-transition-duration-default);
+        transition: width var(--bc-transition-duration-fast), height var(--bc-transition-duration-fast);
         align-self: center;
         width: 100%;
         max-width: 500px;
         aspect-ratio: 1 / 1;
 
         .skill {
-            transition: background-color var(--bc-transition-duration-default);
+            transition: background-color var(--bc-transition-duration-fast);
             cursor: pointer;
 
             &:hover {

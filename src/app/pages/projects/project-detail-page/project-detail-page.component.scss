@@ -16,7 +16,7 @@
     color: var(--bc-text-default-color);
     cursor: pointer;
     padding: 0;
-    transition: color var(--bc-transition-duration-default);
+    transition: color var(--bc-transition-duration-fast);
 
     &:hover {
         color: var(--bc-accent-color);

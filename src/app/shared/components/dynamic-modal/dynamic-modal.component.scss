@@ -12,10 +12,10 @@
     backdrop-filter: blur(6px);
     background-color: var(--bc-bg-modals-wrapper-color);
 
-    animation: fade-in var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
+    animation: fade-in var(--bc-transition-duration-fast) cubic-bezier(0.250, 0.460, 0.450, 0.940);
 
     &.closed {
-        animation: fade-out var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
+        animation: fade-out var(--bc-transition-duration-fast) cubic-bezier(0.250, 0.460, 0.450, 0.940);
     }
 
     .dynamic-modal {
@@ -37,7 +37,7 @@
         }
 
         &.transition {
-            transition: width var(--bc-transition-duration-default);
+            transition: width var(--bc-transition-duration-fast);
         }
 
         &__body {

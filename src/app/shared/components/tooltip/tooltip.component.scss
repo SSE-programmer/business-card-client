@@ -1,7 +1,7 @@
 :host {
     position: absolute;
     z-index: 400;
-    animation: fade-in var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
+    animation: fade-in var(--bc-transition-duration-fast) cubic-bezier(0.250, 0.460, 0.450, 0.940);
     background-color: var(--bc-bg-modals-color);
     backdrop-filter: blur(10px);
     box-shadow: var(--bc-modals-box-shadow);
@@ -9,7 +9,7 @@
     pointer-events: none;
 
     &.closed {
-        animation: fade-out var(--bc-transition-duration-default) cubic-bezier(0.250, 0.460, 0.450, 0.940);
+        animation: fade-out var(--bc-transition-duration-fast) cubic-bezier(0.250, 0.460, 0.450, 0.940);
     }
 
     .arrow {

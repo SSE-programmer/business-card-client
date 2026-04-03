@@ -1,14 +1,20 @@
 @let proj = project();
 
 <a class="project-card bc-flex bc-flex-col" [routerLink]="['/projects', proj.id]" queryParamsHandling="preserve">
-    <div class="preview-container bc-flex bc-justify-center bc-items-center">
+    <div
+        class="preview-container bc-flex bc-justify-center bc-items-center"
+        [class.loaded]="previewImageLoaded()"
+    >
         @if (proj.previewImage) {
             <img
                 class="preview-image"
-                [src]="proj.previewImage"
+                [src]="previewImageUrl()"
                 [alt]="proj.title"
+                (load)="setPreviewImageLoadedStatus(true)"
             >
-        } @else {
+        }
+
+        @if (!previewImageLoaded()) {
             <span class="placeholder-title bc-font-patua-one bc-text-26 bc-light-accent-color">{{ proj.title }}</span>
         }
     </div>

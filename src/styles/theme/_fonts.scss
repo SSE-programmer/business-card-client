@@ -55,7 +55,7 @@ h5.bc-h {
 
 .bc-link {
     color: var(--bc-text-default-color);
-    transition: color var(--bc-transition-duration-default);
+    transition: color var(--bc-transition-duration-fast);
     cursor: pointer;
 
     &:hover {

@@ -19,7 +19,7 @@
         border-radius: 50%;
         background-color: var(--bc-border-default-color);
         transform: translate(-50%, -50%);
-        transition: all var(--bc-transition-duration-default);
+        transition: all var(--bc-transition-duration-fast);
 
         @media (max-width: 720px) {
             width: 10px;
@@ -63,7 +63,7 @@
             min-width: 2px;
             height: 15px;
             transform: translate(50%, -50%);
-            transition: all var(--bc-transition-duration-default);
+            transition: all var(--bc-transition-duration-fast);
             background-color: var(--bc-border-default-color);
 
             @media (max-width: 720px) {
@@ -97,7 +97,7 @@
             border-bottom: 8px solid transparent;
             vertical-align: middle;
             transform: translate(50%, -50%);
-            transition: all var(--bc-transition-duration-default);
+            transition: all var(--bc-transition-duration-fast);
         }
 
         &:hover:not(.not-full-time), &:focus-visible:not(.not-full-time) {

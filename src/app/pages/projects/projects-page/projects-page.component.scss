@@ -21,9 +21,9 @@
     background: transparent;
     color: var(--bc-text-default-color);
     cursor: pointer;
-    transition: background-color var(--bc-transition-duration-default),
-                border-color var(--bc-transition-duration-default),
-                color var(--bc-transition-duration-default);
+    transition: background-color var(--bc-transition-duration-fast),
+                border-color var(--bc-transition-duration-fast),
+                color var(--bc-transition-duration-fast);
 
     &:hover {
         border-color: var(--bc-border-hover-color);
