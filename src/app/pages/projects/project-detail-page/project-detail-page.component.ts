@@ -1,17 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of, switchMap } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { IProject } from '../models/project.model';
 import { PROJECTS } from '../data/projects.data';
 import { MarkdownPipe } from '@shared/pipes/markdown.pipe';
 import { TagComponent } from '@components/tag/tag.component';
 import { ImageViewerService } from '@components/image-viewer/image-viewer.service';
 import { IMedia } from '@services/http-services/telegram-http/models/ITelegramMessage';
-import { MediaGridComponent } from '@pages/blog/blog-page/components/media-grid/media-grid.component';
-import { IMediaEvent } from '@pages/blog/blog-page/components/media-grid/media-grid.component';
+import { IMediaEvent, MediaGridComponent } from '@pages/blog/blog-page/components/media-grid/media-grid.component';
 import { IconBackComponent } from '@icons/icon-back/icon-back.component';
 
 @Component({

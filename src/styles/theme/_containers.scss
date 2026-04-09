@@ -11,14 +11,19 @@
 .bc-scroll {
     &::-webkit-scrollbar {
         display: block;
-        width: 6px;
-        height: 6px;
+        width: 10px;
+        height: 10px;
         opacity: .2;
+
+        @media screen and (max-width: 720px) {
+            width: 6px;
+            height: 6px;
+        }
     }
 
     /* Track */
     &::-webkit-scrollbar-track {
-        background: transparent;
+        background-color: color-mix(in srgb, var(--bc-light-primary-color), transparent 50%);
     }
 
     /* Handle */
@@ -30,7 +35,7 @@
 
     /* Handle on hover */
     &::-webkit-scrollbar-thumb:hover {
-        background: var(--bc-light-primary-color);
+        background: var(--bc-primary-color);
     }
 }
 
