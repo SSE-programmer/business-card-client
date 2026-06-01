@@ -63,8 +63,16 @@ export class ProjectDetailPageComponent {
         }
 
         const from = this.formatDate(project.period.from);
-        const to = project.period.to ? this.formatDate(project.period.to) : 'Present';
-        return `${from} — ${to}`;
+
+        if (!project.period.to) {
+            return `${from} — Present`;
+        }
+
+        if (project.period.to === project.period.from) {
+            return from;
+        }
+
+        return `${from} — ${this.formatDate(project.period.to)}`;
     }
 
     protected goBack(): void {
