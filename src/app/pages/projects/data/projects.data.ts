@@ -56,6 +56,26 @@ export const PROJECTS: IProject[] = [
         previewImage: 'assets/projects/business-card/preview.webp',
     },
     {
+        id: 'budesh',
+        title: 'Budesh? Cafe',
+        category: EProjectCategory.Pet,
+        description: 'Full-stack website for a real coffee shop: SSR public site, admin CMS, Go API, PostgreSQL, Docker deployment on budesh-coffee.ru with 152-FZ compliance.',
+        stack: ['Angular 21', 'SSR', 'Go', 'Fiber v3', 'PostgreSQL', 'Docker', 'Nginx', 'Tailwind CSS v4.0', 'GitLab CI'],
+        period: { from: '2026-05', to: '2026-05' },
+        contentPath: 'assets/projects/budesh/content.md',
+        previewImage: 'assets/projects/budesh/preview.webp',
+        images: [
+            'assets/projects/budesh/img_1.webp',
+            'assets/projects/budesh/img_2.webp',
+            'assets/projects/budesh/img_3.webp',
+            'assets/projects/budesh/img_4.webp',
+            'assets/projects/budesh/img_5.webp',
+            'assets/projects/budesh/img_6.webp',
+            'assets/projects/budesh/img_7.webp',
+            'assets/projects/budesh/img_8.webp',
+        ]
+    },
+    {
         id: 'annoto',
         title: 'Annoto',
         category: EProjectCategory.Challenge,
