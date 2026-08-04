@@ -5,10 +5,10 @@
 ### Заходим в директорию live
 ```cd /etc/letsencrypt/live/sse-programmer.com/```
 
-### Обновляем ссылки на самую свежую версию (cert5)
+### Обновляем ссылки на самую свежую версию (cert6)
 ```
-ln -sf ../../archive/sse-programmer.com/fullchain5.pem fullchain.pem
-ln -sf ../../archive/sse-programmer.com/privkey5.pem privkey.pem
-ln -sf ../../archive/sse-programmer.com/cert5.pem cert.pem
-ln -sf ../../archive/sse-programmer.com/chain5.pem chain.pem
+ln -sf ../../archive/sse-programmer.com/fullchain6.pem fullchain.pem
+ln -sf ../../archive/sse-programmer.com/privkey6.pem privkey.pem
+ln -sf ../../archive/sse-programmer.com/cert6.pem cert.pem
+ln -sf ../../archive/sse-programmer.com/chain6.pem chain.pem
 ```

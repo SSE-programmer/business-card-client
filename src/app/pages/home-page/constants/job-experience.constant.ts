@@ -80,6 +80,7 @@ export const JOB_EXPERIENCE: IJobExperience[] = [
             {
                 title: 'Head of Frontend Development',
                 startDate: new Date('2024-07-15'),
+                endDate: new Date('2026-07-31'),
                 isFullTime: true,
                 projects: ['Education platform'],
                 techStack: [
@@ -105,6 +106,35 @@ export const JOB_EXPERIENCE: IJobExperience[] = [
                     'Hired/trained 5+ developers and conducted technical interviews',
                 ],
                 description: 'Developed and maintained web applications for education and SaaS platforms. Upgraded AngularJS projects to Angular 17 with TypeScript integration.',
+            },
+        ],
+    },
+    {
+        company: 'Infotecs',
+        positions: [
+            {
+                title: 'Software Engineer',
+                startDate: new Date('2026-08-05'),
+                isFullTime: true,
+                projects: ['ViPNet EDI Client'],
+                techStack: [
+                    'Angular',
+                    'TypeScript',
+                    'JavaScript',
+                    'REST API',
+                    'NGRX',
+                    'RxJS',
+                ],
+                achievements: [],
+                description: `
+Working on ViPNet EDI Client - a certified cryptographic software complex  for secure electronic document interchange with Russian government  information systems (SMEV, ESIA, EPGU). The product is used by organizations  across public sector, healthcare, finance, and other regulated industries  to integrate with state services and submit legally signed requests.
+
+Responsibilities:
+- Frontend development using Angular 18+, TypeScript, and RxJS
+- Building and maintaining shared UI component libraries
+- Code review and participation in technical backlog grooming
+- Test coverage for delivered functionality
+                `,
             },
         ],
     },
