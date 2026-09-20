@@ -8,6 +8,15 @@ export const PROJECT_CATEGORIES: IProjectCategory[] = [
 
 export const PROJECTS: IProject[] = [
     {
+        id: 'infotecs',
+        title: 'Infotecs',
+        category: EProjectCategory.Commercial,
+        description: 'Corporate Angular UI component library and product features in information security. Enabled strict typing, migrated components to Signals, switched to package-mode builds, and added Cypress e2e coverage.',
+        stack: ['Angular 18+', 'TypeScript', 'RxJS', 'Angular Signals', 'Cypress', 'XML', 'Git'],
+        period: { from: '2026-08' },
+        contentPath: 'assets/projects/infotecs/content.md',
+    },
+    {
         id: 'inschooltech',
         title: 'Inschooltech',
         category: EProjectCategory.Commercial,

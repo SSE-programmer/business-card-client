@@ -114,27 +114,31 @@ export const JOB_EXPERIENCE: IJobExperience[] = [
         positions: [
             {
                 title: 'Software Engineer',
-                startDate: new Date('2026-08-05'),
+                startDate: new Date('2026-08-01'),
                 isFullTime: true,
-                projects: ['ViPNet EDI Client'],
-                techStack: [
-                    'Angular',
-                    'TypeScript',
-                    'JavaScript',
-                    'REST API',
-                    'NGRX',
-                    'RxJS',
+                projects: [
+                    'Corporate Angular UI component library',
+                    'Company product features',
                 ],
-                achievements: [],
-                description: `
-Working on ViPNet EDI Client - a certified cryptographic software complex  for secure electronic document interchange with Russian government  information systems (SMEV, ESIA, EPGU). The product is used by organizations  across public sector, healthcare, finance, and other regulated industries  to integrate with state services and submit legally signed requests.
-
-Responsibilities:
-- Frontend development using Angular 18+, TypeScript, and RxJS
-- Building and maintaining shared UI component libraries
-- Code review and participation in technical backlog grooming
-- Test coverage for delivered functionality
-                `,
+                techStack: [
+                    'Angular 18+',
+                    'TypeScript',
+                    'RxJS',
+                    'Angular Signals',
+                    'Cypress',
+                    'XML',
+                    'Git',
+                ],
+                achievements: [
+                    'Enabled strict and strictTemplate modes for the UI library tsconfig, improving type safety',
+                    'Upgraded the library codebase to the current Angular version and migrated components to Signals',
+                    'Migrated the component library from a flat build to package mode with secondary entry points',
+                    'Wrote Cypress e2e tests covering key scenarios',
+                    'Authored and refined XML for data request formation',
+                    'Fixed typing issues across the project, improving build stability',
+                    'Proposed development process and code style improvements; enhanced library components and core product features',
+                ],
+                description: 'Development and evolution of a corporate Angular UI component library, plus feature work on several company products. On-site work with heightened information security requirements. Domain: information security / information protection.',
             },
         ],
     },
